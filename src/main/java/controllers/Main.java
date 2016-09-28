@@ -1,6 +1,6 @@
 package controllers;
 
-import java.io.IOException;
+import java.io.File;
 import java.util.Collection;
 
 import asg.cliche.Command;
@@ -10,9 +10,30 @@ import asg.cliche.ShellFactory;
 import com.google.common.base.Optional;
 import models.Activity;
 import models.User;
+import utils.XMLSerializer;
+import utils.Serializer;
 
 public class Main {
-    PaceMakerAPI paceApi = new PaceMakerAPI();
+    private PaceMakerAPI paceApi;
+
+    public Main() throws Exception {
+        File datastore = new File("datastore.xml");
+        Serializer serializer = new XMLSerializer(datastore);
+
+        paceApi = new PaceMakerAPI(serializer);
+        if (datastore.isFile()) {
+            paceApi.load();
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        Main main = new Main();
+
+        Shell shell = ShellFactory.createConsoleShell("pm", "Welcome to pacemaker-console - ?help for instructions", main);
+        shell.commandLoop();
+
+        main.paceApi.store();
+    }
 
     @Command(description = "Create a new User")
     public void createUser(@Param(name = "first name") String firstName, @Param(name = "last name") String lastName,
@@ -40,10 +61,13 @@ public class Main {
         }
     }
 
-    @Command(description = "Add an Activity")
-    public void addActivity(@Param(name = "user-id") Long userId, @Param(name = "type") String type,
-                            @Param(name = "location") String location, @Param(name = "distance") Double distance) {
-        paceApi.addActivity(userId, type, location, distance);
+    @Command(description = "Add an activity")
+    public void addActivity(@Param(name = "user-id") Long id, @Param(name = "type") String type,
+                            @Param(name = "location") String location, @Param(name = "distance") double distance) {
+        Optional<User> user = Optional.fromNullable(paceApi.getUser(id));
+        if (user.isPresent()) {
+            paceApi.addActivity(id, type, location, distance);
+        }
     }
 
     @Command(description = "Delete an Activity")
@@ -55,13 +79,11 @@ public class Main {
     }
 
     @Command(description = "Add a Location")
-    public void addLocation(@Param(name = "activity-id") Long activityId, @Param(name = "latitude") Double latitude,
-                            @Param(name = "longitude") Double longitude) {
-        paceApi.addLocation(activityId, latitude, longitude);
-    }
-
-    public static void main(String[] args) throws IOException {
-        Shell shell = ShellFactory.createConsoleShell("pc", "Welcome to pacemaker-console - ?help for instructions", new Main());
-        shell.commandLoop();
+    public void addLocation(@Param(name = "activity-id") Long activityId, @Param(name = "latitude") float latitude,
+                            @Param(name = "longitude") float longitude) {
+        Optional<Activity> activity = Optional.fromNullable(paceApi.getActivity(activityId));
+        if (activity.isPresent()) {
+            paceApi.addLocation(activity.get().id, latitude, longitude);
+        }
     }
 }

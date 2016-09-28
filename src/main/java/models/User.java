@@ -14,7 +14,7 @@ public class User {
     public String lastName;
     public String email;
     public String password;
-    public Map<Long, Activity> activities = new HashMap<>();
+    public Map<Long, Activity> activities = new HashMap<Long, Activity>();
 
     public User() {
     }

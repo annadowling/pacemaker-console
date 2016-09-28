@@ -1,13 +1,4 @@
-package models;/***************************************************************
- * Copyright (c) 2016 Errigal Inc.
- * <p>
- * This software is the confidential and proprietary information
- * of Errigal, Inc.  You shall not disclose such confidential
- * information and shall use it only in accordance with the
- * license agreement you entered into with Errigal.
- * <p>
- * **************************************************************
- */
+package models;
 
 import com.google.common.base.Objects;
 
@@ -26,15 +17,15 @@ public class Activity {
     public Long id;
     public String type;
     public String location;
-    public Double distance;
+    public double distance;
 
 
-    public List<Location> route = new ArrayList<>();
+    public List<Location> route = new ArrayList<Location>();
 
     public Activity() {
     }
 
-    public Activity(String type, String location, Double distance) {
+    public Activity(String type, String location, double distance) {
         this.id = counter++;
         this.type = type;
         this.location = location;

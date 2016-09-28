@@ -1,17 +1,43 @@
 package controllers;
 
+import java.io.*;
 import java.util.*;
 
+import utils.Serializer;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import models.Activity;
 import models.Location;
 import models.User;
 
 public class PaceMakerAPI {
-    private Map<Long, User> userIndex = new HashMap<>();
-    private Map<String, User> emailIndex = new HashMap<>();
-    private Map<Long, Activity> activityIndex = new HashMap<>();
-    private List<Location> locationIndex = new ArrayList<>();
+    private Map<Long, User> userIndex = new HashMap<Long, User>();
+    private Map<String, User> emailIndex = new HashMap<String, User>();
+    private Map<Long, Activity> activityIndex = new HashMap<Long, Activity>();
+    private List<Location> locationIndex = new ArrayList<Location>();
+    private Serializer serializer;
 
+    public PaceMakerAPI(Serializer serializer)
+    {
+        this.serializer = serializer;
+    }
+
+    @SuppressWarnings("unchecked")
+    public void load() throws Exception
+    {
+        serializer.read();
+        activityIndex = (Map<Long, Activity>) serializer.pop();
+        emailIndex      = (Map<String, User>)   serializer.pop();
+        userIndex       = (Map<Long, User>)     serializer.pop();
+    }
+
+    public void store() throws Exception
+    {
+        serializer.push(userIndex);
+        serializer.push(emailIndex);
+        serializer.push(activityIndex);
+        serializer.write();
+    }
     public Collection<User> getUsers() {
         return userIndex.values();
     }
@@ -36,9 +62,16 @@ public class PaceMakerAPI {
         return userIndex.get(id);
     }
 
+    public User listUser(Long id){
+        return userIndex.get(id);
+    }
+
     public void deleteUser(Long id) {
-        User user = userIndex.remove(id);
-        emailIndex.remove(user.email);
+        Optional<User> user = Optional.ofNullable(userIndex.get(id));
+        if(user.isPresent()) {
+            userIndex.remove(id);
+            emailIndex.remove(user.get().email);
+        }
     }
 
     public Activity getActivity(Long id) {
@@ -57,27 +90,55 @@ public class PaceMakerAPI {
         this.locationIndex = locationIndex;
     }
 
-    public Activity addActivity(Long userId, String type, String location, Double distance) {
+    public void addActivity(Long userId, String type, String location, double distance) {
         Activity activity = new Activity(type, location, distance);
-        User userToAddActivityTo = getUser(userId);
-        Map<Long, Activity> activitiesMap = new HashMap<>();
-        if (userToAddActivityTo != null) {
+        Optional<User> user = Optional.ofNullable(userIndex.get(userId));
+        if (user.isPresent())
+        {
+            user.get().activities.put(activity.id, activity);
             activityIndex.put(activity.id, activity);
-            activitiesMap.put(userId, activity);
-            userToAddActivityTo.setActivities(activitiesMap);
         }
-        return activity;
     }
 
-    public Location addLocation(Long activityId, Double latitude, Double longitude) {
-        List<Location> locationsList = new ArrayList<>();
-        Location location = new Location(latitude, longitude);
-        locationIndex.add(location);
-        locationsList.add(location);
-        Activity activityToAddLocationTo = getActivity(activityId);
-        if (activityToAddLocationTo != null) {
-            activityToAddLocationTo.setRoute(locationsList);
+    public void addLocation(Long activityId, float latitude, float longitude) {
+        Optional<Activity> activity = Optional.ofNullable(activityIndex.get(activityId));
+        if (activity.isPresent())
+        {
+            activity.get().route.add(new Location(latitude, longitude));
         }
-        return location;
+    }
+
+    @SuppressWarnings("unchecked")
+    public void load(File file) throws Exception
+    {
+        ObjectInputStream is = null;
+        try
+        {
+            XStream xstream = new XStream(new DomDriver());
+            is = xstream.createObjectInputStream(new FileReader(file));
+            userIndex       = (Map<Long, User>)     is.readObject();
+            emailIndex      = (Map<String, User>)   is.readObject();
+            activityIndex = (Map<Long, Activity>) is.readObject();
+        }
+        catch(EOFException e)
+        {
+        }
+        finally
+        {
+            if (is != null)
+            {
+                is.close();
+            }
+        }
+    }
+
+    public void store(File file) throws Exception
+    {
+        XStream xstream = new XStream(new DomDriver());
+        ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter(file));
+        out.writeObject(userIndex);
+        out.writeObject(emailIndex);
+        out.writeObject(activityIndex);
+        out.close();
     }
 }
