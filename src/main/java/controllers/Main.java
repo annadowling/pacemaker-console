@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.List;
 
 import asg.cliche.Command;
 import asg.cliche.Param;
@@ -86,4 +87,17 @@ public class Main {
             paceApi.addLocation(activity.get().id, latitude, longitude);
         }
     }
+
+    @Command(description = "List a User entry by id")
+    public void listUser(@Param(name = "id") Long id) {
+        User user = paceApi.listUser(id);
+        System.out.println(user);
+    }
+
+    @Command(description = "List all User entries")
+    public void listUsers() {
+        List<User> users = paceApi.listUsers();
+        System.out.println(users);
+    }
+
 }
