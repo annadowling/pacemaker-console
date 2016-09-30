@@ -100,4 +100,9 @@ public class Main {
         System.out.println(users);
     }
 
+    @Command(description = "List an Activity by id")
+    public void listAcitivtyById(@Param(name = "id") Long id) {
+        Activity activity = paceApi.getActivity(id);
+        System.out.println(activity);
+    }
 }
