@@ -14,16 +14,16 @@ import asg.cliche.ShellFactory;
 import com.google.common.base.Optional;
 import models.Activity;
 import models.User;
-import utils.JSONSerializer;
-import utils.XMLSerializer;
-import utils.Serializer;
+import utils.*;
 
 public class Main {
     private PaceMakerAPI paceApi;
 
     public Main() throws Exception {
-        File datastore = new File("datastore.xml");
-        Serializer serializer = new XMLSerializer(datastore);
+//        File datastore = new File("datastore.xml");
+//        Serializer serializer = new XMLSerializer(datastore);
+        File datastore = new File("datastore.bin");
+        Serializer serializer = new BinarySerializer(datastore);
 
         paceApi = new PaceMakerAPI(serializer);
         if (datastore.isFile()) {
@@ -41,9 +41,29 @@ public class Main {
         main.paceApi.store();
     }
 
-    public void useJSONFileFormat() throws Exception{
+    public void useYAMLFileFormat() throws Exception {
+        File datastore = new File("datastore.yml");
+        Serializer serializer = new YAMLSerializer(datastore);
+
+        paceApi = new PaceMakerAPI(serializer);
+        if (datastore.isFile()) {
+            paceApi.load();
+        }
+    }
+
+    public void useJSONFileFormat() throws Exception {
         File datastore = new File("datastore.JSON");
         Serializer serializer = new JSONSerializer(datastore);
+
+        paceApi = new PaceMakerAPI(serializer);
+        if (datastore.isFile()) {
+            paceApi.load();
+        }
+    }
+
+    public void useBinaryFileFormat() throws Exception {
+        File datastore = new File("datastore.bin");
+        Serializer serializer = new BinarySerializer(datastore);
 
         paceApi = new PaceMakerAPI(serializer);
         if (datastore.isFile()) {
