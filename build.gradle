@@ -21,6 +21,8 @@ dependencies {
     // https://mvnrepository.com/artifact/com.googlecode.clichemaven/cliche
     compile group: 'com.googlecode.clichemaven', name: 'cliche', version: '110413'
     compile 'com.google.guava:guava:19.0'
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
 
 }
 

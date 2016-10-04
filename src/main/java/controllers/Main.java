@@ -1,6 +1,9 @@
 package controllers;
 
-import java.io.File;
+import java.io.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 
@@ -11,6 +14,7 @@ import asg.cliche.ShellFactory;
 import com.google.common.base.Optional;
 import models.Activity;
 import models.User;
+import utils.JSONSerializer;
 import utils.XMLSerializer;
 import utils.Serializer;
 
@@ -27,6 +31,7 @@ public class Main {
         }
     }
 
+
     public static void main(String[] args) throws Exception {
         Main main = new Main();
 
@@ -34,6 +39,16 @@ public class Main {
         shell.commandLoop();
 
         main.paceApi.store();
+    }
+
+    public void useJSONFileFormat() throws Exception{
+        File datastore = new File("datastore.JSON");
+        Serializer serializer = new JSONSerializer(datastore);
+
+        paceApi = new PaceMakerAPI(serializer);
+        if (datastore.isFile()) {
+            paceApi.load();
+        }
     }
 
     @Command(description = "Create a new User")
@@ -64,10 +79,15 @@ public class Main {
 
     @Command(description = "Add an activity")
     public void addActivity(@Param(name = "user-id") Long id, @Param(name = "type") String type,
-                            @Param(name = "location") String location, @Param(name = "distance") double distance) {
+                            @Param(name = "location") String location, @Param(name = "distance") double distance,
+                            @Param(name = "activityDate") String activityDate,
+                            @Param(name = "activityDuration") String activityDuration) {
         Optional<User> user = Optional.fromNullable(paceApi.getUser(id));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime convertedDate = LocalDateTime.parse(activityDate, formatter);
+        Duration convertedDuration = Duration.parse(activityDuration);
         if (user.isPresent()) {
-            paceApi.addActivity(id, type, location, distance);
+            paceApi.addActivity(id, type, location, distance, convertedDate, convertedDuration);
         }
     }
 

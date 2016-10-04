@@ -1,25 +1,23 @@
 package utils;
 
-/**
- * Created by annadowling on 28/09/2016.
- */
-
+import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.Stack;
 
-public class XMLSerializer implements Serializer {
+/**
+ * Created by annadowling on 04/10/2016.
+ */
+
+public class JSONSerializer implements Serializer {
 
     private Stack stack = new Stack();
     private File file;
 
-    public XMLSerializer(File file) {
+    public JSONSerializer(File file) {
         this.file = file;
     }
 
@@ -34,11 +32,11 @@ public class XMLSerializer implements Serializer {
     @SuppressWarnings("unchecked")
     public void read() throws Exception {
         ObjectInputStream is = null;
-
         try {
-            XStream xstream = new XStream(new DomDriver());
+            XStream xstream = new XStream(new JettisonMappedXmlDriver());
             is = xstream.createObjectInputStream(new FileReader(file));
             stack = (Stack) is.readObject();
+
         } finally {
             if (is != null) {
                 is.close();
@@ -48,9 +46,8 @@ public class XMLSerializer implements Serializer {
 
     public void write() throws Exception {
         ObjectOutputStream os = null;
-
         try {
-            XStream xstream = new XStream(new DomDriver());
+            XStream xstream = new XStream(new JettisonMappedXmlDriver());
             os = xstream.createObjectOutputStream(new FileWriter(file));
             os.writeObject(stack);
         } finally {

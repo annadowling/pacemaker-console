@@ -1,0 +1,40 @@
+<object-stream>
+  <java.util.Stack serialization="custom">
+    <unserializable-parents/>
+    <vector>
+      <default>
+        <capacityIncrement>0</capacityIncrement>
+        <elementCount>3</elementCount>
+        <elementData>
+          <map>
+            <entry>
+              <long>0</long>
+              <models.User>
+                <id>0</id>
+                <firstName>homer</firstName>
+                <lastName>simpsom</lastName>
+                <email>homer@simpson.com</email>
+                <password>secret</password>
+                <activities/>
+              </models.User>
+            </entry>
+          </map>
+          <map>
+            <entry>
+              <string>homer@simpson.com</string>
+              <models.User reference="../../../map/entry/models.User"/>
+            </entry>
+          </map>
+          <map/>
+          <null/>
+          <null/>
+          <null/>
+          <null/>
+          <null/>
+          <null/>
+          <null/>
+        </elementData>
+      </default>
+    </vector>
+  </java.util.Stack>
+</object-stream>
