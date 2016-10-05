@@ -3,10 +3,9 @@ package controllers;
 import java.io.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import utils.Serializer;
+import utils.*;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import models.Activity;
@@ -32,6 +31,7 @@ public class PaceMakerAPI {
         userIndex = (Map<Long, User>) serializer.pop();
     }
 
+    @SuppressWarnings("unchecked")
     public void store() throws Exception {
         serializer.push(userIndex);
         serializer.push(emailIndex);

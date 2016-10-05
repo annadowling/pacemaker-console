@@ -20,10 +20,8 @@ public class Main {
     private PaceMakerAPI paceApi;
 
     public Main() throws Exception {
-//        File datastore = new File("datastore.xml");
-//        Serializer serializer = new XMLSerializer(datastore);
-        File datastore = new File("datastore.bin");
-        Serializer serializer = new BinarySerializer(datastore);
+        File datastore = new File("datastore.xml");
+        Serializer serializer = new XMLSerializer(datastore);
 
         paceApi = new PaceMakerAPI(serializer);
         if (datastore.isFile()) {
@@ -40,36 +38,51 @@ public class Main {
 
         main.paceApi.store();
     }
-
+    
+    @SuppressWarnings("unchecked")
     public void useYAMLFileFormat() throws Exception {
         File datastore = new File("datastore.yml");
         Serializer serializer = new YAMLSerializer(datastore);
 
-        paceApi = new PaceMakerAPI(serializer);
+        PaceMakerAPI paceApi = new PaceMakerAPI(serializer);
         if (datastore.isFile()) {
             paceApi.load();
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void useJSONFileFormat() throws Exception {
         File datastore = new File("datastore.JSON");
         Serializer serializer = new JSONSerializer(datastore);
 
-        paceApi = new PaceMakerAPI(serializer);
+        PaceMakerAPI paceApi = new PaceMakerAPI(serializer);
         if (datastore.isFile()) {
             paceApi.load();
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void useBinaryFileFormat() throws Exception {
         File datastore = new File("datastore.bin");
         Serializer serializer = new BinarySerializer(datastore);
 
-        paceApi = new PaceMakerAPI(serializer);
+        PaceMakerAPI paceApi = new PaceMakerAPI(serializer);
         if (datastore.isFile()) {
             paceApi.load();
         }
     }
+
+    @SuppressWarnings("unchecked")
+    public void useXMLFileFormat() throws Exception {
+        File datastore = new File("datastore.xml");
+        Serializer serializer = new XMLSerializer(datastore);
+
+        PaceMakerAPI paceApi = new PaceMakerAPI(serializer);
+        if (datastore.isFile()) {
+            paceApi.load();
+        }
+    }
+
 
     @Command(description = "Create a new User")
     public void createUser(@Param(name = "first name") String firstName, @Param(name = "last name") String lastName,
@@ -144,5 +157,20 @@ public class Main {
     public void listAcitivtyById(@Param(name = "id") Long id) {
         Activity activity = paceApi.getActivity(id);
         System.out.println(activity);
+    }
+
+    @Command(description = "Change File Format")
+    public void changeFileFormat(@Param(name = "fileFormat(xml, json, yaml, binary)") String fileFormat) throws Exception {
+        if (fileFormat.equals("json")) {
+            useJSONFileFormat();
+        } else if (fileFormat.equals("xml")) {
+            useXMLFileFormat();
+        } else if (fileFormat.equals("yaml")) {
+            useYAMLFileFormat();
+        } else if (fileFormat.equals("binary")) {
+            useBinaryFileFormat();
+        } else {
+            System.out.println("File format is unrecognised, please try again");
+        }
     }
 }

@@ -11,17 +11,28 @@
               <long>0</long>
               <models.User>
                 <id>0</id>
-                <firstName>homer</firstName>
-                <lastName>simpsom</lastName>
-                <email>homer@simpson.com</email>
-                <password>secret</password>
+                <firstName>anna</firstName>
+                <lastName>dwoling</lastName>
+                <email>ad@gmail.com</email>
+                <password>1234</password>
                 <activities/>
               </models.User>
             </entry>
           </map>
           <map>
             <entry>
-              <string>homer@simpson.com</string>
+              <string>ad@g.com</string>
+              <models.User>
+                <id>0</id>
+                <firstName>anna</firstName>
+                <lastName>dowling</lastName>
+                <email>ad@g.com</email>
+                <password>1234</password>
+                <activities/>
+              </models.User>
+            </entry>
+            <entry>
+              <string>ad@gmail.com</string>
               <models.User reference="../../../map/entry/models.User"/>
             </entry>
           </map>

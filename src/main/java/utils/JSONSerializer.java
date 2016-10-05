@@ -1,9 +1,7 @@
 package utils;
 
-import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import java.io.*;
 import java.util.Stack;
