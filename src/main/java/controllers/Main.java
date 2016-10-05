@@ -38,13 +38,13 @@ public class Main {
 
         main.paceApi.store();
     }
-    
+
     @SuppressWarnings("unchecked")
     public void useYAMLFileFormat() throws Exception {
         File datastore = new File("datastore.yml");
         Serializer serializer = new YAMLSerializer(datastore);
 
-        PaceMakerAPI paceApi = new PaceMakerAPI(serializer);
+        paceApi = new PaceMakerAPI(serializer);
         if (datastore.isFile()) {
             paceApi.load();
         }
@@ -55,7 +55,7 @@ public class Main {
         File datastore = new File("datastore.JSON");
         Serializer serializer = new JSONSerializer(datastore);
 
-        PaceMakerAPI paceApi = new PaceMakerAPI(serializer);
+        paceApi = new PaceMakerAPI(serializer);
         if (datastore.isFile()) {
             paceApi.load();
         }
@@ -63,10 +63,10 @@ public class Main {
 
     @SuppressWarnings("unchecked")
     public void useBinaryFileFormat() throws Exception {
-        File datastore = new File("datastore.bin");
+        File datastore = new File("datastore.txt");
         Serializer serializer = new BinarySerializer(datastore);
 
-        PaceMakerAPI paceApi = new PaceMakerAPI(serializer);
+        paceApi = new PaceMakerAPI(serializer);
         if (datastore.isFile()) {
             paceApi.load();
         }
@@ -77,10 +77,22 @@ public class Main {
         File datastore = new File("datastore.xml");
         Serializer serializer = new XMLSerializer(datastore);
 
-        PaceMakerAPI paceApi = new PaceMakerAPI(serializer);
+        paceApi = new PaceMakerAPI(serializer);
         if (datastore.isFile()) {
             paceApi.load();
         }
+    }
+
+    @Command(description = "load all data")
+    public void load() throws Exception
+    {
+        paceApi.load();
+    }
+
+    @Command(description = "store all data")
+    public void store() throws Exception
+    {
+        paceApi.store();
     }
 
 
