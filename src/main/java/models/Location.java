@@ -11,6 +11,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 public class Location {
 
     static Long counter = 0l;
+
     public Long id;
     public float latitude;
     public float longitude;
@@ -36,5 +37,29 @@ public class Location {
     @Override
     public int hashCode() {
         return Objects.hashCode(this.id, this.latitude, this.longitude);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public float getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
+    }
+
+    public float getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
     }
 }

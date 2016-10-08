@@ -76,6 +76,15 @@ public class PaceMakerAPI {
         return usersInMap;
     }
 
+    public List<Activity> listActivities() {
+        List<Activity> activitiesInMap = new ArrayList<Activity>();
+        for (Map.Entry<Long, Activity> entry : activityIndex.entrySet()) {
+            Activity mapEntry = entry.getValue();
+            activitiesInMap.add(mapEntry);
+        }
+        return activitiesInMap;
+    }
+
     public void deleteUser(Long id) {
         Optional<User> user = Optional.ofNullable(userIndex.get(id));
         if (user.isPresent()) {

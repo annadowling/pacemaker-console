@@ -177,6 +177,12 @@ public class Main {
         return asciiFormatter.formatActivity(activityList);
     }
 
+    @Command(description = "List all Activities")
+    public String listActivityById() {
+        List<Activity> activityList = paceApi.listActivities();
+        return asciiFormatter.formatActivity(activityList);
+    }
+
     @Command(description = "Change File Format")
     public void changeFileFormat(@Param(name = "fileFormat(xml, json, yaml, binary)") String fileFormat) throws Exception {
         if (fileFormat.equals("json")) {
