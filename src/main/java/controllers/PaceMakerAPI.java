@@ -104,8 +104,8 @@ public class PaceMakerAPI {
         this.locationIndex = locationIndex;
     }
 
-    public void addActivity(Long userId, String type, String location, double distance, LocalDateTime activityDate, Duration activityDuration) {
-        Activity activity = new Activity(type, location, distance, activityDate, activityDuration);
+    public void addActivity(Long userId, String type, String location, double distance) {
+        Activity activity = new Activity(type, location, distance);
         Optional<User> user = Optional.ofNullable(userIndex.get(userId));
         if (user.isPresent()) {
             user.get().activities.put(activity.id, activity);

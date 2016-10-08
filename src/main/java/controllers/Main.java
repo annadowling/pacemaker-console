@@ -1,23 +1,30 @@
 package controllers;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import asg.cliche.Command;
 import asg.cliche.Param;
 import asg.cliche.Shell;
 import asg.cliche.ShellFactory;
+import com.bethecoder.ascii_table.ASCIITable;
+import com.bethecoder.ascii_table.impl.CollectionASCIITableAware;
+import com.bethecoder.ascii_table.spec.IASCIITable;
+import com.bethecoder.ascii_table.spec.IASCIITableAware;
+import com.google.common.base.Functions;
 import com.google.common.base.Optional;
+import com.google.common.collect.Lists;
 import models.Activity;
 import models.User;
 import utils.*;
 
 public class Main {
     private PaceMakerAPI paceApi;
+    ASCIIFormatter asciiFormatter = new ASCIIFormatter();
 
     public Main() throws Exception {
         File datastore = new File("datastore.xml");
@@ -33,7 +40,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Main main = new Main();
 
-        Shell shell = ShellFactory.createConsoleShell("pm", "Welcome to pacemaker-console - ?help for instructions", main);
+        Shell shell = ShellFactory.createConsoleShell("pm", "Welcome to pacemaker-console - ?help for instructions or ?list to view all commands", main);
         shell.commandLoop();
 
         main.paceApi.store();
@@ -84,14 +91,12 @@ public class Main {
     }
 
     @Command(description = "load all data")
-    public void load() throws Exception
-    {
+    public void load() throws Exception {
         paceApi.load();
     }
 
     @Command(description = "store all data")
-    public void store() throws Exception
-    {
+    public void store() throws Exception {
         paceApi.store();
     }
 
@@ -103,15 +108,17 @@ public class Main {
     }
 
     @Command(description = "Get a Users details")
-    public void getUser(@Param(name = "email") String email) {
+    public String getUser(@Param(name = "email") String email) {
         User user = paceApi.getUserByEmail(email);
-        System.out.println(user);
+        List<User> userList = new ArrayList<User>();
+        userList.add(user);
+        return asciiFormatter.formatUsers(userList);
     }
 
     @Command(description = "Get all users details")
-    public void getUsers() {
-        Collection<User> users = paceApi.getUsers();
-        System.out.println(users);
+    public String getUsers() {
+        List<User> userList = new ArrayList<>(paceApi.getUsers());
+        return asciiFormatter.formatUsers(userList);
     }
 
     @Command(description = "Delete a User")
@@ -124,15 +131,10 @@ public class Main {
 
     @Command(description = "Add an activity")
     public void addActivity(@Param(name = "user-id") Long id, @Param(name = "type") String type,
-                            @Param(name = "location") String location, @Param(name = "distance") double distance,
-                            @Param(name = "activityDate") String activityDate,
-                            @Param(name = "activityDuration") String activityDuration) {
+                            @Param(name = "location") String location, @Param(name = "distance") double distance) {
         Optional<User> user = Optional.fromNullable(paceApi.getUser(id));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime convertedDate = LocalDateTime.parse(activityDate, formatter);
-        Duration convertedDuration = Duration.parse(activityDuration);
         if (user.isPresent()) {
-            paceApi.addActivity(id, type, location, distance, convertedDate, convertedDuration);
+            paceApi.addActivity(id, type, location, distance);
         }
     }
 
@@ -154,21 +156,25 @@ public class Main {
     }
 
     @Command(description = "List a User entry by id")
-    public void listUser(@Param(name = "id") Long id) {
+    public String listUser(@Param(name = "id") Long id) {
         User user = paceApi.listUser(id);
-        System.out.println(user);
+        List<User> userList = new ArrayList<User>();
+        userList.add(user);
+        return asciiFormatter.formatUsers(userList);
     }
 
     @Command(description = "List all User entries")
-    public void listUsers() {
+    public String listUsers() {
         List<User> users = paceApi.listUsers();
-        System.out.println(users);
+        return asciiFormatter.formatUsers(users);
     }
 
     @Command(description = "List an Activity by id")
-    public void listAcitivtyById(@Param(name = "id") Long id) {
+    public String listActivityById(@Param(name = "id") Long id) {
         Activity activity = paceApi.getActivity(id);
-        System.out.println(activity);
+        List<Activity> activityList = new ArrayList<Activity>();
+        activityList.add(activity);
+        return asciiFormatter.formatActivity(activityList);
     }
 
     @Command(description = "Change File Format")

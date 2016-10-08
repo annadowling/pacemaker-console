@@ -1,9 +1,6 @@
 package models;
 
 import com.google.common.base.Objects;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +17,6 @@ public class Activity {
     public String type;
     public String location;
     public double distance;
-    public LocalDateTime activityDate;
-    public Duration activityDuration;
 
 
     public List<Location> route = new ArrayList<Location>();
@@ -29,13 +24,11 @@ public class Activity {
     public Activity() {
     }
 
-    public Activity(String type, String location, double distance, LocalDateTime activityDate, Duration activityDuration) {
+    public Activity(String type, String location, double distance) {
         this.id = counter++;
         this.type = type;
         this.location = location;
         this.distance = distance;
-        this.activityDate = activityDate;
-        this.activityDuration = activityDuration;
     }
 
     public List<Location> getRoute() {
@@ -53,15 +46,13 @@ public class Activity {
                 .addValue(type)
                 .addValue(location)
                 .addValue(distance)
-                .addValue(activityDate)
-                .addValue(activityDuration)
                 .addValue(route)
                 .toString();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(this.id, this.type, this.location, this.distance, this.activityDate, this.activityDuration, this.route);
+        return Objects.hashCode(this.id, this.type, this.location, this.distance, this.route);
     }
 
 }

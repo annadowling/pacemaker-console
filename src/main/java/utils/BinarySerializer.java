@@ -1,8 +1,6 @@
 package utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.Stack;
 
 /**
@@ -28,12 +26,10 @@ public class BinarySerializer implements Serializer {
 
     @SuppressWarnings("unchecked")
     public void read() throws Exception {
-        FileInputStream inputStream = null;
-        byte[] buffer = null;
-        int length = (int) file.length();
-        buffer = new byte[length];
+        InputStream inputStream = null;
+        byte[] buffer = new byte[(int) file.length()];
         try {
-            inputStream = new FileInputStream(file);
+            inputStream = new BufferedInputStream(new FileInputStream(file));
             inputStream.read(buffer);
         } finally {
             if (inputStream != null) {
@@ -44,19 +40,15 @@ public class BinarySerializer implements Serializer {
     }
 
     public void write() throws Exception {
-        FileOutputStream outputStream = null;
-        byte[] buffer = null;
-        int length = (int) file.length();
-        buffer = new byte[length];
+        OutputStream outputStream = null;
+        byte[] buffer = new byte[(int) file.length()];
         try {
-            outputStream = new FileOutputStream(file);
+            outputStream = new BufferedOutputStream(new FileOutputStream(file));
             outputStream.write(buffer);
         } finally {
             if (outputStream != null) {
                 outputStream.close();
             }
         }
-
-
     }
 }

@@ -10,8 +10,8 @@ import java.util.Map;
 public class User {
     static Long   counter = 0l;
     public Long   id;
-    public String firstName;
-    public String lastName;
+    public String firstname;
+    public String lastname;
     public String email;
     public String password;
     public Map<Long, Activity> activities = new HashMap<Long, Activity>();
@@ -21,9 +21,57 @@ public class User {
 
     public User(String firstName, String lastName, String email, String password) {
         this.id        = counter++;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstname = firstName;
+        this.lastname = lastName;
         this.email = email;
+        this.password = password;
+    }
+
+    public static Long getCounter() {
+        return counter;
+    }
+
+    public static void setCounter(Long counter) {
+        User.counter = counter;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstname;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstname = firstName;
+    }
+
+    public String getLastName() {
+        return lastname;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastname = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -39,8 +87,8 @@ public class User {
     public String toString() {
         return toStringHelper(this)
                 .addValue(id)
-                .addValue(firstName)
-                .addValue(lastName)
+                .addValue(firstname)
+                .addValue(lastname)
                 .addValue(password)
                 .addValue(email)
                 .addValue(activities)
@@ -48,7 +96,25 @@ public class User {
     }
 
     @Override
+    public boolean equals(final Object obj)
+    {
+        if (obj instanceof User)
+        {
+            final User userInstance = (User) obj;
+            return Objects.equal(firstname,   userInstance.firstname)
+                    && Objects.equal(lastname,    userInstance.lastname)
+                    && Objects.equal(email,       userInstance.email)
+                    && Objects.equal(password,    userInstance.password)
+                    && Objects.equal(activities,  userInstance.activities);
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    @Override
     public int hashCode() {
-        return Objects.hashCode(this.id, this.lastName, this.firstName, this.email, this.password, this.activities);
+        return Objects.hashCode(this.id, this.lastname, this.firstname, this.email, this.password, this.activities);
     }
 }
