@@ -3,6 +3,7 @@ package controllers;
 import java.io.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 import utils.*;
@@ -113,8 +114,8 @@ public class PaceMakerAPI {
         this.locationIndex = locationIndex;
     }
 
-    public void addActivity(Long userId, String type, String location, double distance) {
-        Activity activity = new Activity(type, location, distance);
+    public void addActivity(Long userId, String type, String location, double distance, LocalDateTime starttime, LocalTime duration) {
+        Activity activity = new Activity(type, location, distance, starttime, duration);
         Optional<User> user = Optional.ofNullable(userIndex.get(userId));
         if (user.isPresent()) {
             user.get().activities.put(activity.id, activity);

@@ -1,13 +1,4 @@
-package utils;/***************************************************************
- * Copyright (c) 2016 Errigal Inc.
- * <p>
- * This software is the confidential and proprietary information
- * of Errigal, Inc.  You shall not disclose such confidential
- * information and shall use it only in accordance with the
- * license agreement you entered into with Errigal.
- * <p>
- * **************************************************************
- */
+package utils;
 
 import com.bethecoder.ascii_table.ASCIITable;
 import com.bethecoder.ascii_table.impl.CollectionASCIITableAware;
@@ -37,7 +28,7 @@ public class ASCIIFormatter {
         String asciiTable = "";
 
         if (!activityList.isEmpty()) {
-            IASCIITableAware asciiTableAware = new CollectionASCIITableAware<Activity>(activityList, "id", "type", "location", "distance", "route");
+            IASCIITableAware asciiTableAware = new CollectionASCIITableAware<Activity>(activityList, "id", "type", "location", "distance", "duration", "route");
             asciiTable = ASCIITable.getInstance().getTable(asciiTableAware);
         }
         return asciiTable;

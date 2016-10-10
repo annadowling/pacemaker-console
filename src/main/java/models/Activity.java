@@ -2,6 +2,8 @@ package models;
 
 import com.google.common.base.Objects;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,8 @@ public class Activity {
     public String type;
     public String location;
     public double distance;
+    public LocalDateTime starttime;
+    public LocalTime duration;
 
 
     public List<Location> route = new ArrayList<Location>();
@@ -25,19 +29,13 @@ public class Activity {
     public Activity() {
     }
 
-    public Activity(String type, String location, double distance) {
+    public Activity(String type, String location, double distance, LocalDateTime starttime, LocalTime duration) {
         this.id = counter++;
         this.type = type;
         this.location = location;
         this.distance = distance;
-    }
-
-    public List<Location> getRoute() {
-        return route;
-    }
-
-    public void setRoute(List<Location> route) {
-        this.route = route;
+        this.starttime = starttime;
+        this.duration = duration;
     }
 
     @Override
@@ -47,13 +45,15 @@ public class Activity {
                 .addValue(type)
                 .addValue(location)
                 .addValue(distance)
+                .addValue(starttime)
+                .addValue(duration)
                 .addValue(route)
                 .toString();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(this.id, this.type, this.location, this.distance, this.route);
+        return Objects.hashCode(this.id, this.type, this.location, this.distance, this.starttime, this.duration, this.route);
     }
 
     public Long getId() {
@@ -87,4 +87,29 @@ public class Activity {
     public void setDistance(double distance) {
         this.distance = distance;
     }
+
+    public LocalTime getDuration() {
+        return duration;
+    }
+
+    public void setDuration(LocalTime duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getStarttime() {
+        return starttime;
+    }
+
+    public void setStarttime(LocalDateTime starttime) {
+        this.starttime = starttime;
+    }
+
+    public List<Location> getRoute() {
+        return route;
+    }
+
+    public void setRoute(List<Location> route) {
+        this.route = route;
+    }
+
 }

@@ -4,7 +4,9 @@ import java.io.*;
 import java.lang.reflect.Array;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 import asg.cliche.Command;
@@ -25,6 +27,7 @@ import utils.*;
 public class Main {
     private PaceMakerAPI paceApi;
     ASCIIFormatter asciiFormatter = new ASCIIFormatter();
+    DateTimeParser dateTimeParser = new DateTimeParser();
 
     public Main() throws Exception {
         File datastore = new File("datastore.xml");
@@ -131,10 +134,18 @@ public class Main {
 
     @Command(description = "Add an activity")
     public void addActivity(@Param(name = "user-id") Long id, @Param(name = "type") String type,
-                            @Param(name = "location") String location, @Param(name = "distance") double distance) {
+                            @Param(name = "location") String location, @Param(name = "distance") double distance,
+                            @Param(name = "start time") String starttime,
+                            @Param(name = "duration(hh:mm:ss)") String duration) {
         Optional<User> user = Optional.fromNullable(paceApi.getUser(id));
         if (user.isPresent()) {
-            paceApi.addActivity(id, type, location, distance);
+            try {
+                LocalTime parsedDuration = dateTimeParser.parseDurationFromString(duration);
+                LocalDateTime parsedStartTime = dateTimeParser.parseStringToDateTime(starttime);
+                paceApi.addActivity(id, type, location, distance, parsedStartTime, parsedDuration);
+            } catch (DateTimeParseException exception) {
+                System.out.println("Please enter the duration in the following format: hh:mm:ss");
+            }
         }
     }
 
