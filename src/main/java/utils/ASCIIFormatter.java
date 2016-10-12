@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ASCIIFormatter {
 
-    public String formatUsers(List<User> userList){
+    public String formatUsers(List<User> userList) {
         String asciiTable = "";
 
         if (!userList.isEmpty()) {
@@ -24,11 +24,11 @@ public class ASCIIFormatter {
         return asciiTable;
     }
 
-    public String formatActivity(List<Activity> activityList){
+    public String formatActivity(List<Activity> activityList) {
         String asciiTable = "";
 
         if (!activityList.isEmpty()) {
-            IASCIITableAware asciiTableAware = new CollectionASCIITableAware<Activity>(activityList, "id", "type", "location", "distance", "duration", "route");
+            IASCIITableAware asciiTableAware = new CollectionASCIITableAware<Activity>(activityList, "id", "type", "location", "distance", "starttime", "duration", "route");
             asciiTable = ASCIITable.getInstance().getTable(asciiTableAware);
         }
         return asciiTable;

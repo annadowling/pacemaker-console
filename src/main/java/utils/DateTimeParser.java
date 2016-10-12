@@ -1,7 +1,7 @@
 package utils;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 
 /**
@@ -10,14 +10,11 @@ import java.time.format.DateTimeFormatter;
 
 public class DateTimeParser {
 
-    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd:MM:yyyy HH:mm:ss");
-
-
     public LocalTime parseDurationFromString(String duration) {
-            return LocalTime.parse(duration);
+        return LocalTime.parse(duration);
     }
 
     public LocalDateTime parseStringToDateTime(String dateTime) {
-        return LocalDateTime.parse(dateTime, dateFormat);
+        return LocalDateTime.parse(dateTime);
     }
 }

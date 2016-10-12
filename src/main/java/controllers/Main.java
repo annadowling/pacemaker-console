@@ -3,6 +3,7 @@ package controllers;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -144,7 +145,7 @@ public class Main {
                 LocalDateTime parsedStartTime = dateTimeParser.parseStringToDateTime(starttime);
                 paceApi.addActivity(id, type, location, distance, parsedStartTime, parsedDuration);
             } catch (DateTimeParseException exception) {
-                System.out.println("Please enter the duration in the following format: hh:mm:ss");
+                System.out.println("Please enter the duration in the following format: hh:mm:ss and the starttime in the following format yyyy:MM:ddTHH:mm:ss");
             }
         }
     }
