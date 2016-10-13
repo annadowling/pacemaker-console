@@ -133,6 +133,14 @@ public class Main {
         }
     }
 
+    @Command(description = "Delete a User by id")
+    public void deleteUser(@Param(name = "id") Long id) {
+        Optional<User> user = Optional.fromNullable(paceApi.getUser(id));
+        if (user.isPresent()) {
+            paceApi.deleteUser(user.get().id);
+        }
+    }
+
     @Command(description = "Add an activity")
     public void addActivity(@Param(name = "user-id") Long id, @Param(name = "type") String type,
                             @Param(name = "location") String location, @Param(name = "distance") double distance,
@@ -181,16 +189,23 @@ public class Main {
         return asciiFormatter.formatUsers(users);
     }
 
-    @Command(description = "List an Activity by id")
-    public String listActivityById(@Param(name = "id") Long id) {
-        Activity activity = paceApi.getActivity(id);
+    @Command(description = "List an Activity by user id")
+    public String listActivitiesByUserId(@Param(name = "id") Long userId) {
+        Optional<User> user = Optional.fromNullable(paceApi.getUser(userId));
+        Set<Long> activityIds = null;
         List<Activity> activityList = new ArrayList<Activity>();
-        activityList.add(activity);
+        if (user.isPresent()) {
+            activityIds = user.get().activities.keySet();
+        }
+        for (Long activityId : activityIds) {
+            Activity activity = paceApi.getActivity(activityId);
+            activityList.add(activity);
+        }
         return asciiFormatter.formatActivity(activityList);
     }
 
     @Command(description = "List all Activities")
-    public String listActivityById() {
+    public String listAllActivities() {
         List<Activity> activityList = paceApi.listActivities();
         return asciiFormatter.formatActivity(activityList);
     }
