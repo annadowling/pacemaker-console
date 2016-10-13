@@ -2,13 +2,15 @@ package models;
 
 import com.google.common.base.Objects;
 
+import java.io.Serializable;
+
 import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
  * Created by annadowling on 23/09/2016.
  */
 
-public class Location {
+public class Location implements Serializable {
 
     static Long counter = 0l;
 

@@ -26,11 +26,11 @@ public class BinarySerializer implements Serializer {
 
     @SuppressWarnings("unchecked")
     public void read() throws Exception {
-        InputStream inputStream = null;
-        byte[] buffer = new byte[(int) file.length()];
+        FileInputStream inputStream = null;
         try {
-            inputStream = new BufferedInputStream(new FileInputStream(file));
-            inputStream.read(buffer);
+            inputStream = new FileInputStream(file);
+            ObjectInputStream objStream = new ObjectInputStream(inputStream);
+            stack = (Stack) objStream.readObject();
         } finally {
             if (inputStream != null) {
                 inputStream.close();
@@ -40,11 +40,11 @@ public class BinarySerializer implements Serializer {
     }
 
     public void write() throws Exception {
-        OutputStream outputStream = null;
-        byte[] buffer = new byte[(int) file.length()];
+        FileOutputStream outputStream = null;
         try {
-            outputStream = new BufferedOutputStream(new FileOutputStream(file));
-            outputStream.write(buffer);
+            outputStream = new FileOutputStream(file);
+            ObjectOutputStream objStream = new ObjectOutputStream(outputStream);
+            objStream.writeObject(stack);
         } finally {
             if (outputStream != null) {
                 outputStream.close();

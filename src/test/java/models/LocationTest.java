@@ -16,8 +16,8 @@ public class LocationTest {
     @Before
     public void setup()
     {
-//        one = new Location(23.3, 33.3);
-//        two = new Location(34.4, 22.2);
+        one = new Location(23.3f, 33.3f);
+        two = new Location(34.4f, 22.2f);
     }
 
     @After
@@ -48,6 +48,6 @@ public class LocationTest {
     public void testToString()
     {
         Location one = new Location(23.3f,33.3f);
-        assertEquals ("Location{2, 23.3f, 33.3f}", one.toString());
+        assertEquals ("Location{2, 23.3, 33.3}", one.toString());
     }
 }

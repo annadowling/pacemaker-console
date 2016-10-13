@@ -2,6 +2,7 @@ package models;
 
 import com.google.common.base.Objects;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -14,7 +15,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  * Created by annadowling on 23/09/2016.
  */
 
-public class Activity {
+public class Activity implements Serializable {
 
     static Long counter = 0l;
     public Long id;

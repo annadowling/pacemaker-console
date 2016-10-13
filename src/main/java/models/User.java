@@ -3,11 +3,13 @@ package models;
 import static com.google.common.base.MoreObjects.toStringHelper;
 
 import com.google.common.base.Objects;
+import utils.Serializer;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User {
+public class User implements Serializable{
     static Long   counter = 0l;
     public Long   id;
     public String firstname;
