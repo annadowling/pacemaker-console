@@ -21,6 +21,7 @@ import com.bethecoder.ascii_table.spec.IASCIITableAware;
 import com.google.common.base.Functions;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
+import comparator.ComparatorLibrary;
 import models.Activity;
 import models.User;
 import utils.*;
@@ -29,6 +30,7 @@ public class Main {
     private PaceMakerAPI paceApi;
     ASCIIFormatter asciiFormatter = new ASCIIFormatter();
     DateTimeParser dateTimeParser = new DateTimeParser();
+    ComparatorLibrary comparator = new ComparatorLibrary();
 
     public Main() throws Exception {
         File datastore = new File("datastore.xml");
@@ -153,7 +155,7 @@ public class Main {
                 LocalDateTime parsedStartTime = dateTimeParser.parseStringToDateTime(starttime);
                 paceApi.addActivity(id, type, location, distance, parsedStartTime, parsedDuration);
             } catch (DateTimeParseException exception) {
-                System.out.println("Please enter the duration in the following format: hh:mm:ss and the starttime in the following format yyyy:MM:ddTHH:mm:ss");
+                System.out.println("Please enter the duration in the following format: hh:mm:ss and the starttime in the following format yyyy-MM-ddTHH:mm:ss");
             }
         }
     }
@@ -207,6 +209,25 @@ public class Main {
     @Command(description = "List all Activities")
     public String listAllActivities() {
         List<Activity> activityList = paceApi.listActivities();
+        return asciiFormatter.formatActivity(activityList);
+    }
+
+    @Command(description = "List all Activities by sort type(starttime, duration, type, location, distance)")
+    public String listAllActivitieBySortType(@Param(name = "sortType") String sortType) {
+        List<Activity> activityList = paceApi.listActivities();
+        if(sortType.equals("starttime")){
+            comparator.sortActivityByStartTime(activityList);
+        }else if(sortType.equals("duration")){
+            comparator.sortActivityByDuration(activityList);
+        }else if(sortType.equals("type")){
+            comparator.sortActivityByLocation(activityList);
+        }else if(sortType.equals("location")){
+            comparator.sortActivityByType(activityList);
+        }else if(sortType.equals("distance")){
+            comparator.sortActivityByDistance(activityList);
+        }else{
+            System.out.println("Please enter a valid sort type from the following options: starttime, duration, type, location, distance");
+        }
         return asciiFormatter.formatActivity(activityList);
     }
 
