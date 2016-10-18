@@ -1,10 +1,10 @@
 cu homer simpsom homer@simpson.com secret
 cu marge simpson marge@simpson.com secret
-aa 0 walk fridge .001
-aa 0 walk bar 1.0
-aa 0 run work 2.2
-aa 1 walk shop 2.5
-aa 1 cycle shop 4.5
-al 3 23.3 32.3
-al 3 23.3 32.5
-al 3 23.3 32.6
+aa 0 walk fridge .001 2016-08-10T12:55:05 12:00:00
+aa 0 walk bar 1.0 2016-08-10T13:55:05 13:00:00
+aa 0 run work 2.2 2016-08-10T14:55:05 14:00:00
+aa 1 walk shop 2.5 2016-08-10T11:55:05 11:00:00
+aa 1 cycle shop 4.5 2016-08-10T11:35:05 11:30:00
+al 0 23.3 32.3
+al 1 23.3 32.5
+al 1 23.3 32.6

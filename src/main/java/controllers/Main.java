@@ -1,12 +1,8 @@
 package controllers;
 
 import java.io.*;
-import java.lang.reflect.Array;
-import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
@@ -14,13 +10,7 @@ import asg.cliche.Command;
 import asg.cliche.Param;
 import asg.cliche.Shell;
 import asg.cliche.ShellFactory;
-import com.bethecoder.ascii_table.ASCIITable;
-import com.bethecoder.ascii_table.impl.CollectionASCIITableAware;
-import com.bethecoder.ascii_table.spec.IASCIITable;
-import com.bethecoder.ascii_table.spec.IASCIITableAware;
-import com.google.common.base.Functions;
 import com.google.common.base.Optional;
-import com.google.common.collect.Lists;
 import comparator.ComparatorLibrary;
 import models.Activity;
 import models.User;
