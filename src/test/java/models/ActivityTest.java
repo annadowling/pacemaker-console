@@ -3,9 +3,12 @@ package models;
 import org.junit.Test;
 import utils.DateTimeParser;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import static models.Fixtures.locations;
 import static org.junit.Assert.*;
 import static models.Fixtures.activities;
 
@@ -44,4 +47,48 @@ public class ActivityTest {
         assertEquals("Activity{" + test.id + ", walk, fridge, 0.001, 2016-08-10T12:55:05, 12:00, []}", test.toString());
 
     }
+
+    @Test
+    public void testGetId(){
+        assert test.getId().equals(test.id);
+    }
+
+    @Test
+    public void testGetType(){
+        assert test.getType().equals(test.type);
+    }
+
+    @Test
+    public void testGetDistance(){
+        assert test.getDistance() == test.distance;
+    }
+
+    @Test
+    public void testGetLocation(){
+        assert test.getLocation().equals(test.location);
+    }
+
+    @Test
+    public void testGetDuration(){
+        assert test.getDuration() == test.duration;
+    }
+
+    @Test
+    public void testGetStartTime(){
+        assert test.getStarttime() == test.starttime;
+    }
+
+    @Test
+    public void testGetRoutes(){
+        List<Location> locationsList = new ArrayList<Location>();
+        locationsList.add(new Location(44.3f, 88.3f));
+        test.setRoute(locationsList);
+
+        assertNotNull(test.getRoute());
+        assert test.getRoute().size() == 1;
+        assert test.getRoute().equals(locationsList);
+    }
+
+
+
 }

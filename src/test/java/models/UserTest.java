@@ -1,8 +1,11 @@
 package models;
 
 import org.junit.Test;
+import utils.DateTimeParser;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import static org.junit.Assert.*;
 import static models.Fixtures.users;
@@ -55,5 +58,49 @@ public class UserTest
         assertNotEquals(homer, bart);
         assertSame(homer, homer);
         assertNotSame(homer, homer2);
+    }
+
+    @Test
+    public void testGetFirstName(){
+        assert homer.getFirstname().equals(homer.firstname);
+
+    }
+
+    @Test
+    public void testGetLastName(){
+        assert homer.getLastname().equals(homer.lastname);
+
+    }
+
+    @Test
+    public void testGetEmail(){
+        assert homer.getEmail().equals(homer.email);
+
+    }
+
+    @Test
+    public void testGetPassword(){
+        assert homer.getPassword().equals(homer.password);
+
+    }
+
+    @Test
+    public void testGetId(){
+        assert homer.getId().equals(homer.id);
+
+    }
+
+    @Test
+    public void testGetActivities(){
+        DateTimeParser parser = new DateTimeParser();
+        Activity activity = new Activity ("walk",  "fridge", 0.001, parser.parseStringToDateTime("2016-08-10T12:55:05"), parser.parseDurationFromString("12:00:00"));
+        Map<Long, Activity> activityMap = new HashMap<Long, Activity>();
+        activityMap.put(homer.id, activity);
+
+        homer.setActivities(activityMap);
+        
+        assertNotNull(homer.getActivities());
+        assert homer.getActivities().size() == 1;
+        assert homer.getActivities().equals(activityMap);
     }
 }

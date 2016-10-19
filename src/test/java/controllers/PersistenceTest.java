@@ -4,8 +4,7 @@ import models.Activity;
 import models.Location;
 import models.User;
 import org.junit.Test;
-import utils.Serializer;
-import utils.XMLSerializer;
+import utils.*;
 
 import java.io.File;
 
@@ -85,6 +84,52 @@ public class PersistenceTest {
             assertTrue (pacemaker2.getUsers().contains(user));
         }
         deleteFile ("testdatastore.xml");
+    }
+
+    @Test
+    public void testBinarySerializer() throws Exception
+    {
+        String datastoreFile = "testdatastore.txt";
+        deleteFile (datastoreFile);
+
+        Serializer serializer = new BinarySerializer(new File (datastoreFile));
+
+        pacemaker = new PaceMakerAPI(serializer);
+        populate(pacemaker);
+        pacemaker.store();
+
+        PaceMakerAPI pacemaker2 =  new PaceMakerAPI(serializer);
+        pacemaker2.load();
+
+        assertEquals (pacemaker.getUsers().size(), pacemaker2.getUsers().size());
+        for (User user : pacemaker.getUsers())
+        {
+            assertTrue (pacemaker2.getUsers().contains(user));
+        }
+        deleteFile ("testdatastore.txt");
+    }
+
+    @Test
+    public void testJSONSerializer() throws Exception
+    {
+        String datastoreFile = "testdatastore.JSON";
+        deleteFile (datastoreFile);
+
+        Serializer serializer = new JSONSerializer(new File (datastoreFile));
+
+        pacemaker = new PaceMakerAPI(serializer);
+        populate(pacemaker);
+        pacemaker.store();
+
+        PaceMakerAPI pacemaker2 =  new PaceMakerAPI(serializer);
+        pacemaker2.load();
+
+        assertEquals (pacemaker.getUsers().size(), pacemaker2.getUsers().size());
+        for (User user : pacemaker.getUsers())
+        {
+            assertTrue (pacemaker2.getUsers().contains(user));
+        }
+        deleteFile ("testdatastore.JSON");
     }
 
 }
