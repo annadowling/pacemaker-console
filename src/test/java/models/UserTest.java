@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.HashSet;
 import java.util.Set;
 import static org.junit.Assert.*;
+import static models.Fixtures.users;
 
 /**
  * Created by annadowling on 11/10/2016.
@@ -13,13 +14,7 @@ import static org.junit.Assert.*;
 
 public class UserTest
 {
-    private User[] users =
-            {
-                    new User ("marge", "simpson", "marge@simpson.com",  "secret"),
-                    new User ("lisa",  "simpson", "lisa@simpson.com",   "secret"),
-                    new User ("bart",  "simpson", "bart@simpson.com",   "secret"),
-                    new User ("maggie","simpson", "maggie@simpson.com", "secret")
-            };
+
     User homer = new User ("homer", "simpson", "homer@simpson.com",  "secret");
 
     @Test
@@ -46,5 +41,19 @@ public class UserTest
     public void testToString()
     {
         assertEquals ("User{" + homer.id + ", homer, simpson, secret, homer@simpson.com, {}}", homer.toString());
+    }
+
+    @Test
+    public void testEquals()
+    {
+        User homer = new User ("homer", "simpson", "homer@simpson.com",  "secret");
+        User homer2 = new User ("homer", "simpson", "homer@simpson.com",  "secret");
+        User bart   = new User ("bart", "simpson", "bartr@simpson.com",  "secret");
+
+        assertEquals(homer, homer);
+        assertEquals(homer, homer2);
+        assertNotEquals(homer, bart);
+        assertSame(homer, homer);
+        assertNotSame(homer, homer2);
     }
 }

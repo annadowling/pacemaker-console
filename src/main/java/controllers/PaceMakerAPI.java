@@ -115,13 +115,18 @@ public class PaceMakerAPI {
         this.locationIndex = locationIndex;
     }
 
-    public void addActivity(Long userId, String type, String location, double distance, LocalDateTime starttime, LocalTime duration) {
-        Activity activity = new Activity(type, location, distance, starttime, duration);
+
+    public Activity addActivity(Long userId, String type, String location, double distance, LocalDateTime starttime, LocalTime duration)
+    {
+        Activity activity = null;
         Optional<User> user = Optional.ofNullable(userIndex.get(userId));
-        if (user.isPresent()) {
+        if (user.isPresent())
+        {
+            activity = new Activity (type, location, distance, starttime, duration);
             user.get().activities.put(activity.id, activity);
             activityIndex.put(activity.id, activity);
         }
+        return activity;
     }
 
     public void addLocation(Long activityId, float latitude, float longitude) {
