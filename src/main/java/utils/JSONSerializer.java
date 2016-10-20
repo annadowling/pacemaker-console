@@ -4,6 +4,9 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 
 /**
@@ -12,7 +15,8 @@ import java.util.Stack;
 
 public class JSONSerializer implements Serializer {
 
-    private Stack stack = new Stack();
+    @SuppressWarnings("unchecked")
+    private Stack stack = new Stack<>();
     private File file;
 
     public JSONSerializer(File file) {
@@ -31,6 +35,7 @@ public class JSONSerializer implements Serializer {
     public void read() throws Exception {
         ObjectInputStream is = null;
         try {
+
             XStream xstream = new XStream(new JettisonMappedXmlDriver());
             is = xstream.createObjectInputStream(new FileReader(file));
             stack = (Stack) is.readObject();

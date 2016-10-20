@@ -19,10 +19,8 @@ import static org.junit.Assert.assertTrue;
 public class PersistenceTest {
     PaceMakerAPI pacemaker;
 
-    void populate (PaceMakerAPI pacemaker)
-    {
-        for (User user : users)
-        {
+    void populate(PaceMakerAPI pacemaker) {
+        for (User user : users) {
             pacemaker.createUser(user.firstname, user.lastname, user.email, user.password);
         }
         User user1 = pacemaker.getUserByEmail(users[0].email);
@@ -33,28 +31,24 @@ public class PersistenceTest {
         pacemaker.addActivity(user2.id, activities[3].type, activities[3].location, activities[3].distance, activities[3].starttime, activities[3].duration);
 
 
-        for (Location location : locations)
-        {
+        for (Location location : locations) {
             pacemaker.addLocation(activity.id, location.latitude, location.longitude);
         }
     }
 
-    void deleteFile(String fileName)
-    {
-        File datastore = new File("testdatastore.xml");
-        if (datastore.exists())
-        {
+    void deleteFile(String fileName) {
+        File datastore = new File(fileName);
+        if (datastore.exists()) {
             datastore.delete();
         }
     }
 
     @Test
-    public void testPopulate()
-    {
+    public void testPopulate() {
         pacemaker = new PaceMakerAPI(null);
 
         assertEquals(0, pacemaker.getUsers().size());
-        populate (pacemaker);
+        populate(pacemaker);
 
         assertEquals(users.length, pacemaker.getUsers().size());
         assertEquals(2, pacemaker.getUserByEmail(users[0].email).activities.size());
@@ -64,72 +58,85 @@ public class PersistenceTest {
     }
 
     @Test
-    public void testXMLSerializer() throws Exception
-    {
+    public void testXMLSerializer() throws Exception {
         String datastoreFile = "testdatastore.xml";
-        deleteFile (datastoreFile);
+        deleteFile(datastoreFile);
 
-        Serializer serializer = new XMLSerializer(new File (datastoreFile));
+        Serializer serializer = new XMLSerializer(new File(datastoreFile));
 
         pacemaker = new PaceMakerAPI(serializer);
         populate(pacemaker);
         pacemaker.store();
 
-        PaceMakerAPI pacemaker2 =  new PaceMakerAPI(serializer);
+        PaceMakerAPI pacemaker2 = new PaceMakerAPI(serializer);
         pacemaker2.load();
 
-        assertEquals (pacemaker.getUsers().size(), pacemaker2.getUsers().size());
-        for (User user : pacemaker.getUsers())
-        {
-            assertTrue (pacemaker2.getUsers().contains(user));
+        assertEquals(pacemaker.getUsers().size(), pacemaker2.getUsers().size());
+        for (User user : pacemaker.getUsers()) {
+            assertTrue(pacemaker2.getUsers().contains(user));
         }
-        deleteFile ("testdatastore.xml");
+        deleteFile("testdatastore.xml");
     }
 
     @Test
-    public void testBinarySerializer() throws Exception
-    {
+    public void testBinarySerializer() throws Exception {
         String datastoreFile = "testdatastore.txt";
-        deleteFile (datastoreFile);
+        deleteFile(datastoreFile);
 
-        Serializer serializer = new BinarySerializer(new File (datastoreFile));
+        Serializer serializer = new BinarySerializer(new File(datastoreFile));
 
         pacemaker = new PaceMakerAPI(serializer);
         populate(pacemaker);
         pacemaker.store();
 
-        PaceMakerAPI pacemaker2 =  new PaceMakerAPI(serializer);
+        PaceMakerAPI pacemaker2 = new PaceMakerAPI(serializer);
         pacemaker2.load();
 
-        assertEquals (pacemaker.getUsers().size(), pacemaker2.getUsers().size());
-        for (User user : pacemaker.getUsers())
-        {
-            assertTrue (pacemaker2.getUsers().contains(user));
+        assertEquals(pacemaker.getUsers().size(), pacemaker2.getUsers().size());
+        for (User user : pacemaker.getUsers()) {
+            assertTrue(pacemaker2.getUsers().contains(user));
         }
-        deleteFile ("testdatastore.txt");
+        deleteFile("testdatastore.txt");
     }
 
     @Test
-    public void testJSONSerializer() throws Exception
-    {
+    public void testJSONSerializer() throws Exception {
         String datastoreFile = "testdatastore.JSON";
-        deleteFile (datastoreFile);
+        deleteFile(datastoreFile);
 
-        Serializer serializer = new JSONSerializer(new File (datastoreFile));
+        Serializer serializer = new JSONSerializer(new File(datastoreFile));
 
         pacemaker = new PaceMakerAPI(serializer);
         populate(pacemaker);
         pacemaker.store();
 
-        PaceMakerAPI pacemaker2 =  new PaceMakerAPI(serializer);
+        PaceMakerAPI pacemaker2 = new PaceMakerAPI(serializer);
         pacemaker2.load();
 
-        assertEquals (pacemaker.getUsers().size(), pacemaker2.getUsers().size());
-        for (User user : pacemaker.getUsers())
-        {
-            assertTrue (pacemaker2.getUsers().contains(user));
+        assertEquals(pacemaker.getUsers().size(), pacemaker2.getUsers().size());
+        for (User user : pacemaker.getUsers()) {
+            assertTrue(pacemaker2.getUsers().contains(user));
         }
-        deleteFile ("testdatastore.JSON");
+        deleteFile("testdatastore.JSON");
     }
+
+    @Test
+    public void testYAMLSerializer() throws Exception {
+        String datastoreFile = "testdatastore.yml";
+        deleteFile(datastoreFile);
+
+        Serializer serializer = new YAMLSerializer(new File(datastoreFile));
+
+        pacemaker = new PaceMakerAPI(serializer);
+        populate(pacemaker);
+        pacemaker.store();
+
+        PaceMakerAPI pacemaker2 = new PaceMakerAPI(serializer);
+        pacemaker2.load();
+
+        assertEquals(pacemaker.getUsers().size(), pacemaker2.getUsers().size());
+        deleteFile("testdatastore.yml");
+    }
+
 
 }

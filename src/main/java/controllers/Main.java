@@ -42,50 +42,6 @@ public class Main {
         main.paceApi.store();
     }
 
-    @SuppressWarnings("unchecked")
-    public void useYAMLFileFormat() throws Exception {
-        File datastore = new File("datastore.yml");
-        Serializer serializer = new YAMLSerializer(datastore);
-
-        paceApi = new PaceMakerAPI(serializer);
-        if (datastore.isFile()) {
-            paceApi.load();
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    public void useJSONFileFormat() throws Exception {
-        File datastore = new File("datastore.JSON");
-        Serializer serializer = new JSONSerializer(datastore);
-
-        paceApi = new PaceMakerAPI(serializer);
-        if (datastore.isFile()) {
-            paceApi.load();
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    public void useBinaryFileFormat() throws Exception {
-        File datastore = new File("datastore.txt");
-        Serializer serializer = new BinarySerializer(datastore);
-
-        paceApi = new PaceMakerAPI(serializer);
-        if (datastore.isFile()) {
-            paceApi.load();
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    public void useXMLFileFormat() throws Exception {
-        File datastore = new File("datastore.xml");
-        Serializer serializer = new XMLSerializer(datastore);
-
-        paceApi = new PaceMakerAPI(serializer);
-        if (datastore.isFile()) {
-            paceApi.load();
-        }
-    }
-
     @Command(description = "load all data")
     public void load() throws Exception {
         paceApi.load();
@@ -137,12 +93,12 @@ public class Main {
     public void addActivity(@Param(name = "user-id") Long id, @Param(name = "type") String type,
                             @Param(name = "location") String location, @Param(name = "distance") double distance,
                             @Param(name = "start time") String starttime,
-                            @Param(name = "duration(hh:mm:ss)") String duration) {
+                            @Param(name = "duration(HH:mm:ss)") String duration) {
         Optional<User> user = Optional.fromNullable(paceApi.getUser(id));
         if (user.isPresent()) {
             try {
-                LocalTime parsedDuration = dateTimeParser.parseDurationFromString(duration);
-                LocalDateTime parsedStartTime = dateTimeParser.parseStringToDateTime(starttime);
+                String parsedDuration = dateTimeParser.parseDurationFromString(duration);
+                String parsedStartTime = dateTimeParser.parseStringToDateTime(starttime);
                 paceApi.addActivity(id, type, location, distance, parsedStartTime, parsedDuration);
             } catch (DateTimeParseException exception) {
                 System.out.println("Please enter the duration in the following format: hh:mm:ss and the starttime in the following format yyyy-MM-ddTHH:mm:ss");
@@ -224,13 +180,13 @@ public class Main {
     @Command(description = "Change File Format")
     public void changeFileFormat(@Param(name = "fileFormat(xml, json, yaml, binary)") String fileFormat) throws Exception {
         if (fileFormat.equals("json")) {
-            useJSONFileFormat();
+            paceApi.useJSONFileFormat();
         } else if (fileFormat.equals("xml")) {
-            useXMLFileFormat();
+            paceApi.useXMLFileFormat();
         } else if (fileFormat.equals("yaml")) {
-            useYAMLFileFormat();
+            paceApi.useYAMLFileFormat();
         } else if (fileFormat.equals("binary")) {
-            useBinaryFileFormat();
+            paceApi.useBinaryFileFormat();
         } else {
             System.out.println("File format is unrecognised, please try again");
         }

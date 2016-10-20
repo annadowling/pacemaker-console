@@ -1,7 +1,9 @@
 package utils;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.LocalTime;
 
 
 /**
@@ -10,11 +12,17 @@ import java.time.LocalTime;
 
 public class DateTimeParser {
 
-    public LocalTime parseDurationFromString(String duration) {
-        return LocalTime.parse(duration);
+    public String parseDurationFromString(String durationInput)
+    {
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm:ss");
+        LocalTime localTime = fmt.parseLocalTime(durationInput);
+        return localTime.toString();
     }
 
-    public LocalDateTime parseStringToDateTime(String dateTime) {
-        return LocalDateTime.parse(dateTime);
+    public String parseStringToDateTime(String dateTime)
+    {
+        String parsedDateTime = dateTime.replace("T", " ");
+        DateTime startime = DateTime.parse(parsedDateTime, DateTimeFormat.forPattern("yyyy-MM-dd hh:mm:ss"));
+        return startime.toString();
     }
 }

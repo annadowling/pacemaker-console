@@ -5,9 +5,7 @@ import models.Location;
 import models.User;
 import org.junit.After;
 import org.junit.Before;
-import controllers.PaceMakerAPI;
 import org.junit.Test;
-
 import static models.Fixtures.users;
 import static models.Fixtures.activities;
 import static models.Fixtures.locations;
@@ -59,13 +57,14 @@ public class PaceMakerAPITest {
     }
 
     @Test
-    public void testDeleteUsers()
+    public void testDeleteUserById()
     {
         assertEquals (users.length, pacemaker.getUsers().size());
         User marge = pacemaker.getUserByEmail("marge@simpson.com");
         pacemaker.deleteUser(marge.id);
         assertEquals (users.length-1, pacemaker.getUsers().size());
     }
+
 
     @Test
     public void testAddActivity()
@@ -75,6 +74,15 @@ public class PaceMakerAPITest {
         Activity returnedActivity = pacemaker.getActivity(activity.id);
         assertEquals(activities[0],  returnedActivity);
         assertNotSame(activities[0], returnedActivity);
+    }
+
+    @Test
+    public void testDeleteActivityById(){
+        User marge = pacemaker.getUserByEmail("marge@simpson.com");
+        Activity activity = pacemaker.addActivity(marge.id, activities[0].type, activities[0].location, activities[0].distance, activities[0].starttime, activities[0].duration);
+        pacemaker.deleteActivity(activity.getId());
+
+        assertNull(pacemaker.getActivity(activity.getId()));
     }
 
     @Test
@@ -110,5 +118,26 @@ public class PaceMakerAPITest {
             assertEquals(location, locations[i]);
             i++;
         }
+    }
+
+    @Test
+    public void testListActivityById(){
+        User marge = pacemaker.getUserByEmail("marge@simpson.com");
+        Long activityId = pacemaker.addActivity(marge.id, activities[0].type, activities[0].location, activities[0].distance, activities[0].starttime, activities[0].duration).id;
+        Activity activity = pacemaker.getActivity(activityId);
+
+        assertEquals(activity, activities[0]);
+    }
+
+    @Test
+    public void testListAllActivities(){
+        User marge = pacemaker.getUserByEmail("marge@simpson.com");
+        Activity activity1 = pacemaker.addActivity(marge.id, activities[0].type, activities[0].location, activities[0].distance, activities[0].starttime, activities[0].duration);
+        Activity activity2 = pacemaker.addActivity(marge.id, activities[1].type, activities[1].location, activities[1].distance, activities[1].starttime, activities[1].duration);
+
+        assertNotNull(pacemaker.listActivities());
+        assert pacemaker.listActivities().size() == 2;
+        assertTrue(pacemaker.listActivities().contains(activity1));
+        assertTrue(pacemaker.listActivities().contains(activity2));
     }
 }

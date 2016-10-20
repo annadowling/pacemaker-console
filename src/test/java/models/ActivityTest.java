@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static models.Fixtures.locations;
 import static org.junit.Assert.*;
 import static models.Fixtures.activities;
 
@@ -29,8 +27,8 @@ public class ActivityTest {
         assertEquals("walk", test.type);
         assertEquals("fridge", test.location);
         assertEquals(0.0001, 0.001, test.distance);
-        assertEquals("2016-08-10T12:55:05", test.starttime.toString());
-        assertEquals("12:00", test.duration.toString());
+        assertEquals("2016-08-10T00:55:05.000+01:00", test.starttime.toString());
+        assertEquals("12:00:00.000", test.duration.toString());
     }
 
     @Test
@@ -44,7 +42,7 @@ public class ActivityTest {
 
     @Test
     public void testToString() {
-        assertEquals("Activity{" + test.id + ", walk, fridge, 0.001, 2016-08-10T12:55:05, 12:00, []}", test.toString());
+        assertEquals("Activity{" + test.id + ", walk, fridge, 0.001, 2016-08-10T00:55:05.000+01:00, 12:00:00.000, []}", test.toString());
 
     }
 

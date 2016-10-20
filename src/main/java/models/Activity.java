@@ -21,8 +21,8 @@ public class Activity implements Serializable {
     public String type;
     public String location;
     public double distance;
-    public LocalDateTime starttime;
-    public LocalTime duration;
+    public String starttime;
+    public String duration;
 
 
     public List<Location> route = new ArrayList<Location>();
@@ -30,7 +30,7 @@ public class Activity implements Serializable {
     public Activity() {
     }
 
-    public Activity(String type, String location, double distance, LocalDateTime starttime, LocalTime duration) {
+    public Activity(String type, String location, double distance, String starttime, String duration) {
         this.id = counter++;
         this.type = type;
         this.location = location;
@@ -108,19 +108,19 @@ public class Activity implements Serializable {
         this.distance = distance;
     }
 
-    public LocalTime getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(LocalTime duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
-    public LocalDateTime getStarttime() {
+    public String getStarttime() {
         return starttime;
     }
 
-    public void setStarttime(LocalDateTime starttime) {
+    public void setStarttime(String starttime) {
         this.starttime = starttime;
     }
 

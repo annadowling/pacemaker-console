@@ -116,13 +116,11 @@ public class PaceMakerAPI {
     }
 
 
-    public Activity addActivity(Long userId, String type, String location, double distance, LocalDateTime starttime, LocalTime duration)
-    {
+    public Activity addActivity(Long userId, String type, String location, double distance, String starttime, String duration) {
         Activity activity = null;
         Optional<User> user = Optional.ofNullable(userIndex.get(userId));
-        if (user.isPresent())
-        {
-            activity = new Activity (type, location, distance, starttime, duration);
+        if (user.isPresent()) {
+            activity = new Activity(type, location, distance, starttime, duration);
             user.get().activities.put(activity.id, activity);
             activityIndex.put(activity.id, activity);
         }
@@ -160,5 +158,45 @@ public class PaceMakerAPI {
         out.writeObject(emailIndex);
         out.writeObject(activityIndex);
         out.close();
+    }
+
+    @SuppressWarnings("unchecked")
+    public void useYAMLFileFormat() throws Exception {
+        File datastore = new File("datastore.yml");
+        serializer = new YAMLSerializer(datastore);
+
+        if (datastore.isFile()) {
+            load();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void useJSONFileFormat() throws Exception {
+        File datastore = new File("datastore.JSON");
+        serializer = new JSONSerializer(datastore);
+
+        if (datastore.isFile()) {
+            load();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void useBinaryFileFormat() throws Exception {
+        File datastore = new File("datastore.txt");
+        serializer = new BinarySerializer(datastore);
+
+        if (datastore.isFile()) {
+            load();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void useXMLFileFormat() throws Exception {
+        File datastore = new File("datastore.xml");
+        serializer = new XMLSerializer(datastore);
+
+        if (datastore.isFile()) {
+            load();
+        }
     }
 }
