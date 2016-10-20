@@ -40,7 +40,7 @@ dependencies {
   compile 'joda-time:joda-time:2.9.4'
   // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-runner
   compile group: 'org.junit.platform', name: 'junit-platform-runner', version: '1.0.0-M2'
-
+  compile files('src/lib/btc-ascii-table-1.0.jar')
 
 }
 
