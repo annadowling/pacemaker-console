@@ -7,10 +7,15 @@ import java.util.List;
 
 /**
  * Created by annadowling on 14/10/2016.
+ * ComparatorLibrary class handles sorting used for listing Activities by certain parameters.
  */
 
 public class ComparatorLibrary {
 
+    /**
+     * Sorts a list of Activity by comparing the starttime field of one instance to another.
+     * @param activityList
+     */
     public void sortActivityByStartTime(List<Activity> activityList) {
         activityList.sort(new Comparator<Activity>() {
             @Override
@@ -20,6 +25,10 @@ public class ComparatorLibrary {
         });
     }
 
+    /**
+     * Sorts a list of Activity by comparing the duration field of one instance to another.
+     * @param activityList
+     */
     public void sortActivityByDuration(List<Activity> activityList) {
         activityList.sort(new Comparator<Activity>() {
             @Override
@@ -29,6 +38,10 @@ public class ComparatorLibrary {
         });
     }
 
+    /**
+     * Sorts a list of Activity by comparing the type field of one instance to another.
+     * @param activityList
+     */
     public void sortActivityByType(List<Activity> activityList) {
         activityList.sort(new Comparator<Activity>() {
             @Override
@@ -38,6 +51,10 @@ public class ComparatorLibrary {
         });
     }
 
+    /**
+     * Sorts a list of Activity by comparing the location field of one instance to another.
+     * @param activityList
+     */
     public void sortActivityByLocation(List<Activity> activityList) {
         activityList.sort(new Comparator<Activity>() {
             @Override
@@ -47,6 +64,10 @@ public class ComparatorLibrary {
         });
     }
 
+    /**
+     * Sorts a list of Activity by comparing the distance field of one instance to another.
+     * @param activityList
+     */
     public void sortActivityByDistance(List<Activity> activityList) {
         activityList.sort(new Comparator<Activity>() {
             @Override

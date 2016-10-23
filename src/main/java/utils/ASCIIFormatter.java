@@ -10,10 +10,19 @@ import java.util.List;
 
 /**
  * Created by annadowling on 09/10/2016.
+ * The ASCIIFormatter class provides methods which format the command line output into ascii tables.
+ * Methods are available for both User and Activity formats.
  */
 
 public class ASCIIFormatter {
 
+    /**
+     * @param userList
+     * @return String asciiTable
+     * Method takes a list of users as parameters.
+     * The user fields are then retrieved using CollectionASCIITableAware, which takes the list and the specified fields.
+     * The output is then formatted as an instance of ASCIITable.
+     */
     public String formatUsers(List<User> userList) {
         String asciiTable = "";
 
@@ -24,6 +33,13 @@ public class ASCIIFormatter {
         return asciiTable;
     }
 
+    /**
+     * @param  activityList
+     * @return String asciiTable
+     * Method takes a list of activities as parameters.
+     * The activity fields are then retrieved using CollectionASCIITableAware, which takes the list and the specified fields.
+     * The output is then formatted as an instance of ASCIITable.
+     */
     public String formatActivity(List<Activity> activityList) {
         String asciiTable = "";
 

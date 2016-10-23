@@ -3,8 +3,6 @@ package models;
 import com.google.common.base.Objects;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +10,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
  * Created by annadowling on 23/09/2016.
+ * Class for modelling the structure of Activity and all of its associated relationships.
  */
 
 public class Activity implements Serializable {

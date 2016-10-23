@@ -4,13 +4,11 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
 
 import java.io.*;
-import java.time.LocalDateTime;
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.Stack;
 
 /**
  * Created by annadowling on 04/10/2016.
+ * JSONSerializer serialises data into JSON which outputs to file format .JSON
  */
 
 public class JSONSerializer implements Serializer {
@@ -31,6 +29,13 @@ public class JSONSerializer implements Serializer {
         return stack.pop();
     }
 
+    /**
+     * We create an Xstream JSON object using JettisonMappedXmlDriver.
+     * The ObjectInputStream is assigned to the out put of xstream.createObjectInputStream
+     * createObjectInputStream is called on the xstream object and the file is passed into this method as a FileReader object.
+     * The ObjectInputStream is then read to the stack.
+     * Finally the stream is closed so that this stream is not left in memory.
+     */
     @SuppressWarnings("unchecked")
     public void read() throws Exception {
         ObjectInputStream is = null;
@@ -46,7 +51,13 @@ public class JSONSerializer implements Serializer {
             }
         }
     }
-
+    /**
+     * We create an Xstream JSON object using JettisonMappedXmlDriver.
+     * The ObjectOutputStream is assigned to the out put of xstream.createObjectOutputStream
+     * createObjectOutputStream is called on the xstream object and the file is passed into this method as a FileWriter object.
+     * The ObjectOutputStream is then written.
+     * Finally the stream is closed so that this stream is not left in memory.
+     */
     public void write() throws Exception {
         ObjectOutputStream os = null;
         try {

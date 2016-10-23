@@ -8,6 +8,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
  * Created by annadowling on 23/09/2016.
+ * Class for modelling the structure of Location and all of its associated relationships.
  */
 
 public class Location implements Serializable {

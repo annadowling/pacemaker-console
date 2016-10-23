@@ -3,12 +3,14 @@ package models;
 import static com.google.common.base.MoreObjects.toStringHelper;
 
 import com.google.common.base.Objects;
-import utils.Serializer;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Created by annadowling on 23/09/2016.
+ * Class for modelling the structure of User and all of its associated relationships.
+ */
 public class User implements Serializable{
     static Long   counter = 0l;
     public Long   id;

@@ -8,6 +8,7 @@ import java.util.Stack;
 
 /**
  * Created by annadowling on 04/10/2016.
+ * YAMLSerializer serialises data into YAML which outputs to file format .yml
  */
 
 public class YAMLSerializer implements Serializer {
@@ -27,6 +28,11 @@ public class YAMLSerializer implements Serializer {
         return stack.pop();
     }
 
+    /**
+     * The read method reads file data using YamlReader which is passed a FileReader object.
+     * YamlReader creates the stack object to be read which is assigned to the stack object.
+     * Finally the stream is closed so that this stream is not left in memory.
+     */
     @SuppressWarnings("unchecked")
     public void read() throws Exception {
         YamlReader reader = null;
@@ -40,6 +46,11 @@ public class YAMLSerializer implements Serializer {
         }
     }
 
+    /**
+     * The write method writes file data using YamlWriter which is passed a FileWriter object.
+     * YamlWriter creates the stack object to be written to, which we call .write on.
+     * Finally the stream is closed so that this stream is not left in memory.
+     */
     public void write() throws Exception {
         YamlWriter writer = null;
         try {
