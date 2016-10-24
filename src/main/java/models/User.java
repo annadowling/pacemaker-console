@@ -20,9 +20,15 @@ public class User implements Serializable{
     public String password;
     public Map<Long, Activity> activities = new HashMap<Long, Activity>();
 
+    /**
+     * Empty constructor for User model.
+     */
     public User() {
     }
 
+    /**
+     * Overloaded constructor for User model.
+     */
     public User(String firstname, String lastname, String email, String password) {
         this.id        = counter++;
         this.firstname = firstname;
@@ -39,54 +45,100 @@ public class User implements Serializable{
         User.counter = counter;
     }
 
+    /**
+     * @return Long User id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * @param Long id
+     * Sets the User id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * @return String User firstname
+     */
     public String getFirstname() {
         return firstname;
     }
 
+    /**
+     * @param String User firstname
+     * Sets the User firstname
+     */
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
 
+    /**
+     * @return String User lastname
+     */
     public String getLastname() {
         return lastname;
     }
 
+    /**
+     * @param String User lastname
+     * Sets the User lastname
+     */
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
+    /**
+     * @return String User email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * @param String User email
+     * Sets the User email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * @return String User password
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * @param String User password
+     * Sets the User password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * @return  Map<Long, Activity> Acitivties
+     */
     public Map<Long, Activity> getActivities() {
         return activities;
     }
 
+    /**
+     * @param Map<Long, Activity> Acitivties
+     * Sets the User Acitivities Map
+     */
     public void setActivities(Map<Long, Activity> activities) {
         this.activities = activities;
     }
 
+    /**
+     * @return String
+     * String representation for the User model
+     */
     @Override
     public String toString() {
         return toStringHelper(this)
@@ -99,6 +151,9 @@ public class User implements Serializable{
                 .toString();
     }
 
+    /**
+     * Equals method for determining object equality for the User model
+     */
     @Override
     public boolean equals(final Object obj)
     {
@@ -117,6 +172,10 @@ public class User implements Serializable{
         }
     }
 
+    /**
+     * @return int
+     * hashcode integer representation for the User model object instances.
+     */
     @Override
     public int hashCode() {
         return Objects.hashCode(this.id, this.lastname, this.firstname, this.email, this.password, this.activities);
