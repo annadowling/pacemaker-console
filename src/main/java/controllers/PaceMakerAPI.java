@@ -22,7 +22,7 @@ public class PaceMakerAPI {
     private Serializer serializer;
 
     /**
-     * @param Serializer
+     * @param serializer
      * Overloaded constructor for PaceMakerAPI
      */
     public PaceMakerAPI(Serializer serializer) {
