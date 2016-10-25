@@ -44,6 +44,16 @@ dependencies {
   compile group: 'org.junit.platform', name: 'junit-platform-runner', version: '1.0.0-M2'
   compile files('src/lib/btc-ascii-table-1.0.jar')
   compile files('src/lib/cliche-110413.jar')
+}
 
-
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+  manifest {
+    attributes 'Implementation-Title': 'Gradle Jar File',
+        'Implementation-Version': version,
+        'Main-Class': 'controllers.Main'
+  }
+  baseName = project.name + '-all'
+  from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+  with jar
 }
