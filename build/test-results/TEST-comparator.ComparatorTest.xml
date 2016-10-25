@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="comparator.ComparatorTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2016-10-25T08:55:58" hostname="Annas-MacBook-Pro.local" time="0.07">
+  <properties/>
+  <testcase name="testSortActivityByLocation" classname="comparator.ComparatorTest" time="0.068"/>
+  <testcase name="testSortActivityByDuration" classname="comparator.ComparatorTest" time="0.0"/>
+  <testcase name="testSortActivityByStartTime" classname="comparator.ComparatorTest" time="0.0"/>
+  <testcase name="testSortActivityByType" classname="comparator.ComparatorTest" time="0.001"/>
+  <testcase name="testSortActivityByDistance" classname="comparator.ComparatorTest" time="0.0"/>
+  <system-out><![CDATA[2016-10-10T00:55:05.000+01:00
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

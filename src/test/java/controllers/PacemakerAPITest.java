@@ -29,12 +29,6 @@ public class PaceMakerAPITest {
         }
     }
 
-    @After
-    public void tearDown()
-    {
-        pacemaker = null;
-    }
-
     @Test
     public void testUser()
     {
@@ -139,5 +133,11 @@ public class PaceMakerAPITest {
         assert pacemaker.listActivities().size() == 2;
         assertTrue(pacemaker.listActivities().contains(activity1));
         assertTrue(pacemaker.listActivities().contains(activity2));
+    }
+
+    @After
+    public void tearDown()
+    {
+        pacemaker = null;
     }
 }

@@ -3,19 +3,23 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'idea'
 apply plugin: 'java'
-apply plugin: "jacoco"
 
-  sourceCompatibility = '1.8'
-
-
+sourceCompatibility = '1.8'
 
 repositories {
   mavenCentral()
 }
 
-jacoco {
-  toolVersion = "0.7.6.201602180812"
-  reportsDir = file("$buildDir/customJacocoReportDir")
+test {
+  testLogging {
+    // Show that tests are run in the command-line output
+    events 'started', 'passed'
+  }
+}
+
+jar {
+  baseName = 'pacemaker-console'
+  version =  '1.0'
 }
 
 dependencies {
@@ -28,8 +32,6 @@ dependencies {
   compile group: 'stax', name: 'stax', version: '1.2.0'
   // https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream
   compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.8'
-  // https://mvnrepository.com/artifact/com.googlecode.clichemaven/cliche
-  compile group: 'com.googlecode.clichemaven', name: 'cliche', version: '110413'
   compile 'com.google.guava:guava:18.0'
   // https://mvnrepository.com/artifact/com.google.code.gson/gson
   compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
@@ -41,9 +43,7 @@ dependencies {
   // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-runner
   compile group: 'org.junit.platform', name: 'junit-platform-runner', version: '1.0.0-M2'
   compile files('src/lib/btc-ascii-table-1.0.jar')
+  compile files('src/lib/cliche-110413.jar')
+
 
 }
-
-
-apply plugin: 'idea'
-apply plugin: 'java'
