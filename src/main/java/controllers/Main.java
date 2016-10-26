@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.*;
-import java.time.format.DateTimeParseException;
 import java.util.*;
 
 import asg.cliche.Command;
@@ -71,17 +70,29 @@ public class Main {
     }
 
     /**
-     * @param String firstName, lastName, email, password
-     * Creates a new user object.
+     * @param firstName, lastName, email, password
+     * Checks if email String is valid
+     * Checks if password length is greater than 6 characters
+     * If these conditions are both met create a new user object.
      */
     @Command(description = "Create a new User")
     public void createUser(@Param(name = "first name") String firstName, @Param(name = "last name") String lastName,
                            @Param(name = "email") String email, @Param(name = "password") String password) {
-        paceApi.createUser(firstName, lastName, email, password);
+        try{
+            boolean emailIsValid = paceApi.checkEmailValidation(email);
+            if(password.length() < 6){
+                System.out.println("Please enter a password of 6 or more characters in length.");
+            }else{
+                if(emailIsValid) {
+                    paceApi.createUser(firstName, lastName, email, password);
+                }
+            }
+        }catch (Exception e){
+        }
     }
 
     /**
-     * @param String email
+     * @param email
      * @return String userDetails
      * returns user details based on the email String passed to the console.
      * Formats the output using asciiFormatter.formatUsers.
@@ -95,7 +106,7 @@ public class Main {
     }
 
     /**
-     * @return String userDetails
+     * @return userDetails
      * returns all user details currently stored.
      * Formats the output using asciiFormatter.formatUsers.
      */
@@ -106,7 +117,7 @@ public class Main {
     }
 
     /**
-     * @param String email
+     * @param email
      * Deletes a user entry based on the email address passed to the console.
      */
     @Command(description = "Delete a User")
@@ -118,7 +129,7 @@ public class Main {
     }
 
     /**
-     * @param Long id
+     * @param id
      * Deletes a user entry based on the user id passed to the console.
      */
     @Command(description = "Delete a User by id")
@@ -130,7 +141,7 @@ public class Main {
     }
 
     /**
-     * @param Long user id, String type, location, distance, starttime, duration.
+     * @param id, String type, location, distance, starttime, duration.
      * Creates a new Activity object.
      * Uses the dateTimeParser to format starttime and duration input.
      * Handles DateTimeParseException
@@ -146,14 +157,14 @@ public class Main {
                 String parsedDuration = dateTimeParser.parseDurationFromString(duration);
                 String parsedStartTime = dateTimeParser.parseStringToDateTime(starttime);
                 paceApi.addActivity(id, type, location, distance, parsedStartTime, parsedDuration);
-            } catch (DateTimeParseException exception) {
+            } catch (IllegalArgumentException exception) {
                 System.out.println("Please enter the duration in the following format: hh:mm:ss and the starttime in the following format yyyy-MM-ddTHH:mm:ss");
             }
         }
     }
 
     /**
-     * @param Long id
+     * @param id
      * Deletes an activity entry based on the activity id passed to the console.
      */
     @Command(description = "Delete an Activity")
@@ -165,7 +176,7 @@ public class Main {
     }
 
     /**
-     * @param Long activityId, float latitude, float longitude
+     * @param activityId, float latitude, float longitude
      * Adds a location to an activity entry.
      */
     @Command(description = "Add a Location")
@@ -178,7 +189,7 @@ public class Main {
     }
 
     /**
-     * @param Long id
+     * @param id
      * @return String user entry
      * returns a user entry based on the user id passed to the console.
      * Formats the output using asciiFormatter.formatUsers.
@@ -203,7 +214,7 @@ public class Main {
     }
 
     /**
-     * @param Long id
+     * @param id
      * @return String activity entry
      * returns an activity entry based on the user id passed to the console.
      * check that the user exists using isPresent().
@@ -236,7 +247,7 @@ public class Main {
     }
 
     /**
-     * @param String sortType - choose from Activity starttime, duration, type, location, distance
+     * @param sortType - choose from Activity starttime, duration, type, location, distance
      * @return String Activity entry
      * returns all activity entries to the console ordered by the sorttype passed to the console.
      * Formats the output using asciiFormatter.formatActivity.
@@ -261,7 +272,7 @@ public class Main {
     }
 
     /**
-     * @param String fileFormat
+     * @param fileFormat
      * Changes the serializer and fileFormat output of PaceMakerAPI
      * Changes the output based on the fileFormat passed in to the console.
      * exception handling for incorrect fileFormat String.

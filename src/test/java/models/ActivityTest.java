@@ -13,6 +13,7 @@ import static models.Fixtures.activities;
 
 /**
  * Created by annadowling on 19/10/2016.
+ * Test Class for Activity model and all of its associated behaviour.
  */
 
 public class ActivityTest {
@@ -22,6 +23,9 @@ public class ActivityTest {
     Activity test = new Activity("walk", "fridge", 0.001, parser.parseStringToDateTime("2016-08-10T12:55:05"), parser.parseDurationFromString("12:00:00"));
 
 
+    /**
+     * Test the creation of activity objects with all parameters.
+     */
     @Test
     public void testCreate() {
         assertEquals("walk", test.type);
@@ -31,6 +35,9 @@ public class ActivityTest {
         assertEquals("12:00:00.000", test.duration.toString());
     }
 
+    /**
+     * Test the uniqueness of id's between activity objects.
+     */
     @Test
     public void testIds() {
         Set<Long> ids = new HashSet<>();
@@ -40,42 +47,66 @@ public class ActivityTest {
         assertEquals(activities.length, ids.size());
     }
 
+    /**
+     * Test the expected output of the toString method of the Activity class.
+     */
     @Test
     public void testToString() {
         assertEquals("Activity{" + test.id + ", walk, fridge, 0.001, 2016-08-10T00:55:05.000+01:00, 12:00:00.000, []}", test.toString());
 
     }
 
+    /**
+     * Test the expected output of the getter method for id of Activity.
+     */
     @Test
     public void testGetId(){
         assert test.getId().equals(test.id);
     }
 
+    /**
+     * Test the expected output of the getter method for type of Activity.
+     */
     @Test
     public void testGetType(){
         assert test.getType().equals(test.type);
     }
 
+    /**
+     * Test the expected output of the getter method for distance of Activity.
+     */
     @Test
     public void testGetDistance(){
         assert test.getDistance() == test.distance;
     }
 
+    /**
+     * Test the expected output of the getter method for location of Activity.
+     */
     @Test
     public void testGetLocation(){
         assert test.getLocation().equals(test.location);
     }
 
+    /**
+     * Test the expected output of the getter method for duration of Activity.
+     */
     @Test
     public void testGetDuration(){
         assert test.getDuration() == test.duration;
     }
 
+    /**
+     * Test the expected output of the getter method for starttime of Activity.
+     */
     @Test
     public void testGetStartTime(){
         assert test.getStarttime() == test.starttime;
     }
 
+    /**
+     * Test the expected output of the getter method for getting location objects(routes) associated with the Activity.
+     */
     @Test
     public void testGetRoutes(){
         List<Location> locationsList = new ArrayList<Location>();
@@ -86,7 +117,4 @@ public class ActivityTest {
         assert test.getRoute().size() == 1;
         assert test.getRoute().equals(locationsList);
     }
-
-
-
 }

@@ -14,11 +14,16 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Created by annadowling on 19/10/2016.
+ * Test Class for Serializer classes and all of their associated behaviour.
  */
 
 public class PersistenceTest {
     PaceMakerAPI pacemaker;
 
+    /**
+     * @param pacemaker
+     * Sets up users, activities and locations which are stored in the PaceMakerAPI instance.
+     */
     void populate(PaceMakerAPI pacemaker) {
         for (User user : users) {
             pacemaker.createUser(user.firstname, user.lastname, user.email, user.password);
@@ -36,6 +41,10 @@ public class PersistenceTest {
         }
     }
 
+    /**
+     * @param fileName
+     * Helper method for tests to delete files is the already exist.
+     */
     void deleteFile(String fileName) {
         File datastore = new File(fileName);
         if (datastore.exists()) {
@@ -43,6 +52,9 @@ public class PersistenceTest {
         }
     }
 
+    /**
+     * Tests that the population and getter methods associated with PaceMakerAPI are working correctly.
+     */
     @Test
     public void testPopulate() {
         pacemaker = new PaceMakerAPI(null);
@@ -57,6 +69,10 @@ public class PersistenceTest {
         assertEquals(locations.length, pacemaker.getActivity(activityID).route.size());
     }
 
+    /**
+     * Tests the XMLSerializer class for storing data in the .xml format
+     * Tests the store() and load() methods of PaceMakerAPI
+     */
     @Test
     public void testXMLSerializer() throws Exception {
         String datastoreFile = "testdatastore.xml";
@@ -78,6 +94,10 @@ public class PersistenceTest {
         deleteFile("testdatastore.xml");
     }
 
+    /**
+     * Tests the BinarySerializer class for storing data in the .txt format
+     * Tests the store() and load() methods of PaceMakerAPI
+     */
     @Test
     public void testBinarySerializer() throws Exception {
         String datastoreFile = "testdatastore.txt";
@@ -99,6 +119,10 @@ public class PersistenceTest {
         deleteFile("testdatastore.txt");
     }
 
+    /**
+     * Tests the JSONSerializer class for storing data in the .JSON format
+     * Tests the store() and load() methods of PaceMakerAPI
+     */
     @Test
     public void testJSONSerializer() throws Exception {
         String datastoreFile = "testdatastore.JSON";
@@ -120,6 +144,10 @@ public class PersistenceTest {
         deleteFile("testdatastore.JSON");
     }
 
+    /**
+     * Tests the YAMLSerializer class for storing data in the .yml format
+     * Tests the store() and load() methods of PaceMakerAPI
+     */
     @Test
     public void testYAMLSerializer() throws Exception {
         String datastoreFile = "testdatastore.yml";

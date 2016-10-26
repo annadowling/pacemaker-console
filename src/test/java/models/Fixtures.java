@@ -4,6 +4,7 @@ import utils.DateTimeParser;
 
 /**
  * Created by annadowling on 18/10/2016.
+ * Helper class for abstracting the set up of Users, Activities and Locations for use with tests.
  */
 
 public class Fixtures {

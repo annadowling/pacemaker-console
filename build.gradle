@@ -1,5 +1,5 @@
 group 'pacemaker-console'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 apply plugin: 'idea'
 apply plugin: 'java'
@@ -42,18 +42,20 @@ dependencies {
   compile 'joda-time:joda-time:2.9.4'
   // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-runner
   compile group: 'org.junit.platform', name: 'junit-platform-runner', version: '1.0.0-M2'
+  // https://mvnrepository.com/artifact/com.sun.mail/javax.mail
+  compile group: 'com.sun.mail', name: 'javax.mail', version: '1.5.5'
   compile files('src/lib/btc-ascii-table-1.0.jar')
   compile files('src/lib/cliche-110413.jar')
 }
 
 //create a single Jar with all dependencies
-task fatJar(type: Jar) {
+task fullJar(type: Jar) {
   manifest {
     attributes 'Implementation-Title': 'Gradle Jar File',
         'Implementation-Version': version,
         'Main-Class': 'controllers.Main'
   }
-  baseName = project.name + '-all'
+  baseName = project.name
   from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
   with jar
 }

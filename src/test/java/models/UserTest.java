@@ -12,6 +12,7 @@ import static models.Fixtures.users;
 
 /**
  * Created by annadowling on 11/10/2016.
+ * Test Class for User model and all of its associated behaviour.
  */
 
 
@@ -20,6 +21,9 @@ public class UserTest
 
     User homer = new User ("homer", "simpson", "homer@simpson.com",  "secret");
 
+    /**
+     * Test the creation of user objects with all parameters.
+     */
     @Test
     public void testCreate()
     {
@@ -29,6 +33,9 @@ public class UserTest
         assertEquals ("secret",              homer.password);
     }
 
+    /**
+     * Test the uniqueness of id's between user objects.
+     */
     @Test
     public void testIds()
     {
@@ -40,12 +47,18 @@ public class UserTest
         assertEquals (users.length, ids.size());
     }
 
+    /**
+     * Test the expected output of the toString method of the User class.
+     */
     @Test
     public void testToString()
     {
         assertEquals ("User{" + homer.id + ", homer, simpson, secret, homer@simpson.com, {}}", homer.toString());
     }
 
+    /**
+     * Test the equality of users with the same details.
+     */
     @Test
     public void testEquals()
     {
@@ -60,36 +73,54 @@ public class UserTest
         assertNotSame(homer, homer2);
     }
 
+    /**
+     * Test the expected output of the getter method for firstname of user.
+     */
     @Test
     public void testGetFirstName(){
         assert homer.getFirstname().equals(homer.firstname);
 
     }
 
+    /**
+     * Test the expected output of the getter method for lastname of user.
+     */
     @Test
     public void testGetLastName(){
         assert homer.getLastname().equals(homer.lastname);
 
     }
 
+    /**
+     * Test the expected output of the getter method for email of user.
+     */
     @Test
     public void testGetEmail(){
         assert homer.getEmail().equals(homer.email);
 
     }
 
+    /**
+     * Test the expected output of the getter method for password of user.
+     */
     @Test
     public void testGetPassword(){
         assert homer.getPassword().equals(homer.password);
 
     }
 
+    /**
+     * Test the expected output of the getter method for id of user.
+     */
     @Test
     public void testGetId(){
         assert homer.getId().equals(homer.id);
 
     }
 
+    /**
+     * Test the expected output of the getter method for activities associated with a user.
+     */
     @Test
     public void testGetActivities(){
         DateTimeParser parser = new DateTimeParser();

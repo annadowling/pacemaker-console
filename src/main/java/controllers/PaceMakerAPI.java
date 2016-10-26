@@ -2,13 +2,15 @@ package controllers;
 
 import java.io.*;
 import java.util.*;
-
 import utils.*;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import models.Activity;
 import models.Location;
 import models.User;
+
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.AddressException;
 
 /**
  * Created by annadowling on 23/09/2016.
@@ -303,5 +305,24 @@ public class PaceMakerAPI {
         if (datastore.isFile()) {
             load();
         }
+    }
+
+    /**
+     * @param email
+     * @return boolean
+     * @throws AddressException
+     * Uses javamail InternetAddress api to check email validity.
+     * If .validate() passes return true.
+     */
+    public boolean checkEmailValidation(String email) throws Exception{
+        boolean isValid = false;
+        InternetAddress internetAddress = new InternetAddress(email);
+        try {
+            internetAddress.validate();
+            isValid = true;
+        } catch (AddressException e) {
+            System.out.println("Email validation has failed, please enter a valid format for: " + email);
+        }
+        return isValid;
     }
 }

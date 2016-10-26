@@ -1,19 +1,24 @@
 package utils;
-/**
- * Created by annadowling on 20/10/2016.
- */
-
 import org.junit.jupiter.api.*;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Created by annadowling on 20/10/2016.
+ * Test Class for DateTimeParser class and all of its associated behaviour.
+ * Test class uses Junit 5 implementation.
+ */
+
 @RunWith(JUnitPlatform.class)
 public class DateTimeParserTest {
 
     public static DateTimeParser parser;
 
+    /**
+     * BeforeAll of the tests are run, instantiate a new instance of DateTimeParser
+     */
     @BeforeAll
     static void initAll() {
         parser = new DateTimeParser();
@@ -55,6 +60,9 @@ public class DateTimeParserTest {
         assertEquals("Invalid format: \"12-2016-08\" is malformed at \"16-08\"", exception.getMessage());
     }
 
+    /**
+     * AfterAll of the tests are run, tearDown the instance of DateTimeParser by setting it to null.
+     */
     @AfterAll
     static void tearDownAll() {
         parser = null;
